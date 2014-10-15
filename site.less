@@ -10,6 +10,9 @@ h2 {
 h3 {
 	.margin-before(0);
 	font-weight: normal;
+	font-size: 21px;
+	margin: 0;
+	padding-top: 3px;
 }
 
 body {
@@ -34,19 +37,42 @@ body {
 	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(0,0,0,0.66) 35px);
 }
 
+.content-col {
+	//float: left;
+}
+
+.sidebar-col {
+	//width: 250px;
+	padding: 5px;
+	background-color: white;
+}
+
 .blog-post {
 	
 }
 
+@gutter-height: 40px;
+
 .blog-post-gutter {
-	height: 3em;
-	width: 13em;
+	display: inline-block;
+	height: @gutter-height;
+	width: 200px;
 	padding: 5px 5px 5px 15px;
-	line-height: 3em;
+	line-height: @gutter-height !important;
 	background-color: white;
 	color: black;
 	
 	background: linear-gradient(135deg, transparent 10px, white 0)
+}
+
+.blog-post-content {
+	display: inline-block;
+	padding: 5px 10px 10px 10px;
+	margin-left: 200px;
+	margin-top: -@gutter-height;
+	width: calc(100% - 200px);
+	background-color: white;
+	min-height: 200px;
 }
 
 // functions
