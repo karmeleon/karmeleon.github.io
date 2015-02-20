@@ -1,3 +1,10 @@
+// functions
+
+@mixin margin-before($in) {
+	-webkit-margin-before: $in;
+			margin-before: $in;
+}
+
 h1 {
 	font-family: 'Lato', sans-serif;
 }
@@ -8,7 +15,7 @@ h2 {
 }
 
 h3 {
-	.margin-before(0);
+	@include margin-before(0);
 	font-weight: normal;
 	font-size: 21px;
 	margin: 0;
@@ -51,14 +58,14 @@ body {
 	
 }
 
-@gutter-height: 40px;
+$gutter-height: 40px;
 
 .blog-post-gutter {
 	display: inline-block;
-	height: @gutter-height;
+	height: $gutter-height;
 	width: 200px;
 	padding: 5px 5px 5px 15px;
-	line-height: @gutter-height !important;
+	line-height: $gutter-height !important;
 	background-color: white;
 	color: black;
 	
@@ -69,15 +76,8 @@ body {
 	display: inline-block;
 	padding: 5px 10px 10px 10px;
 	margin-left: 200px;
-	margin-top: -@gutter-height;
+	margin-top: -$gutter-height;
 	width: calc(100% - 200px);
 	background-color: white;
 	min-height: 200px;
-}
-
-// functions
-
-.margin-before(@in) {
-	-webkit-margin-before: @in;
-			margin-before: @in;
 }
