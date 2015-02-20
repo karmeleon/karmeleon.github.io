@@ -4,33 +4,33 @@ title: Home
 ---
 
 
-			<!-- Show last 5 posts here -->
-			{% for post in paginator.posts %}
-			
-				<article class="blog-post">
-					<div class="blog-post-gutter">
-						<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time><br/>
-						Filed under {{post.categories | category_links}}
-					</div>
-					<div class="blog-post-content">
-						<h4><a href="{{post.url}}">{{ post.title }}</a></h4>
-						<p>{{ post.content }}</p>
-					</div>
-				</article>
-			
-				<!--<article>
-			
-			        <header>
-			            <h2><a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a></h2>
-			            <span class="date"><i class="icon-clock"></i><time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time></span><br/>
-			            <span class="category"><i class="icon-tag"></i> {{ post.categories | category_links }}</span><br/>
-			            <span class="author"><i class="icon-user"></i> {% if post.author %}{{post.author}}{% else %}{{site.author}}{% endif%}</span>
-			        </header>
-				
-					<div class="entry">{{ post.excerpt }}</div>
-			
-				</article>-->
-			{% endfor %}
+<!-- Show last 5 posts here -->
+{% for post in paginator.posts %}
+
+	<article class="blog-post">
+		<div class="blog-post-gutter">
+			<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time><br/>
+			Filed under {{post.categories | category_links}}
+		</div>
+		<div class="blog-post-content">
+			<h4><a href="{{post.url}}">{{ post.title }}</a></h4>
+			{{ content }}
+		</div>
+	</article>
+
+	<!--<article>
+
+        <header>
+            <h2><a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a></h2>
+            <span class="date"><i class="icon-clock"></i><time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time></span><br/>
+            <span class="category"><i class="icon-tag"></i> {{ post.categories | category_links }}</span><br/>
+            <span class="author"><i class="icon-user"></i> {% if post.author %}{{post.author}}{% else %}{{site.author}}{% endif%}</span>
+        </header>
+	
+		<div class="entry">{{ post.excerpt }}</div>
+
+	</article>-->
+{% endfor %}
 
 
 

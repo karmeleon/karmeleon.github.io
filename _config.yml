@@ -37,10 +37,10 @@ sass:
     sass_dir: _scss
 
 # How many articles do you wish to appear on the front page:
-paginate: 3
+paginate: 5
 
 # Code markup
-highligher: rouge
+#highligher: rouge
 
 # Exclude metadata and development time dependencies (like Grunt plugins)
 exclude: [README.md, package.json, grunt.js, Gruntfile.js, Gruntfile.coffee, node_modules, Gemfile, Gemfile.lock, site.less]
