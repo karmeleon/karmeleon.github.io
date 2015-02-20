@@ -15,28 +15,113 @@
 		<link href="css/main.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
-		<div class="header">
-			<h1>Some Blog Thing</h1>
-			<h2>A blog where I talk about code things</h2>
-		</div>	
-		
-		<div class="content-bg">
-		
-			<div class="container">
-	<div class="row">
-		<div class="col-sm-8 content-col">
-			<!-- Show last 5 posts here -->
+		<div class="page">
+			<div class="header">
+				<h1>Some Blog Thing</h1>
+				<h2>A blog where I talk about code things</h2>
+			</div>	
+			
+			<div class="content-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 content-col">
+										<!-- Show last 5 posts here -->
 			
 			
-				<div class="blog-post">
+				<article class="blog-post">
 					<div class="blog-post-gutter">
-						<h3><time datetime="2014-10-14">Oct 14, 2014</time></h3>
+						<time datetime="2015-02-20">Feb 20, 2015</time><br/>
+						Filed under meta
+					</div>
+					<div class="blog-post-content">
+						<h4><a href="/meta/2015/02/20/sample/">Some other title</a></h4>
+						<p>I'll have useful content here eventually, I swear!</p>
+					</div>
+				</article>
+			
+				<!--<article>
+			
+			        <header>
+			            <h2><a href="/meta/2015/02/20/sample/">Some other title</a></h2>
+			            <span class="date"><i class="icon-clock"></i><time datetime="2015-02-20">Feb 20, 2015</time></span><br/>
+			            <span class="category"><i class="icon-tag"></i> meta</span><br/>
+			            <span class="author"><i class="icon-user"></i> Shawn Walton</span>
+			        </header>
+				
+					<div class="entry">I'll have useful content here eventually, I swear!
+
+</div>
+			
+				</article>-->
+			
+			
+				<article class="blog-post">
+					<div class="blog-post-gutter">
+						<time datetime="2015-02-20">Feb 20, 2015</time><br/>
+						Filed under meta
+					</div>
+					<div class="blog-post-content">
+						<h4><a href="/meta/2015/02/20/layout/">Layout Test</a></h4>
+						<p>**Basic**
+
+Neque porro *quisquam* est, qui **dolorem** ipsum, quia ***dolor*** sit, amet, [consectetur](http://cjdns.info/), adipisci velit.
+
+ * lorem
+ * ipsum
+
+1. dolor
+2. sit
+
+
+| First Header | Second Header |
+|--------------|---------------|
+| Table Cell   | Table Cell    |
+
+**Blockquote**
+
+> They who can give up essential liberty to obtain a little temporary safety, deserve neither liberty nor safety.
+> 
+> _Benjamin Franklin_
+
+**Code**
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="kt">void</span> <span class="nf">asyncEnabled</span><span class="p">(</span><span class="n">Dict</span><span class="o">*</span> <span class="n">args</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">vAdmin</span><span class="p">,</span> <span class="n">String</span><span class="o">*</span> <span class="n">txid</span><span class="p">,</span> <span class="k">struct</span> <span class="n">Allocator</span><span class="o">*</span> <span class="n">requestAlloc</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">Admin</span><span class="o">*</span> <span class="n">admin</span> <span class="o">=</span> <span class="n">Identity_check</span><span class="p">((</span><span class="k">struct</span> <span class="n">Admin</span><span class="o">*</span><span class="p">)</span> <span class="n">vAdmin</span><span class="p">);</span>
+    <span class="kt">int64_t</span> <span class="n">enabled</span> <span class="o">=</span> <span class="n">admin</span><span class="o">-&gt;</span><span class="n">asyncEnabled</span><span class="p">;</span>
+    <span class="n">Dict</span> <span class="n">d</span> <span class="o">=</span> <span class="n">Dict_CONST</span><span class="p">(</span><span class="n">String_CONST</span><span class="p">(</span><span class="s">&quot;asyncEnabled&quot;</span><span class="p">),</span> <span class="n">Int_OBJ</span><span class="p">(</span><span class="n">enabled</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">Admin_sendMessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">d</span><span class="p">,</span> <span class="n">txid</span><span class="p">,</span> <span class="n">admin</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+</p>
+					</div>
+				</article>
+			
+				<!--<article>
+			
+			        <header>
+			            <h2><a href="/meta/2015/02/20/layout/">Layout Test</a></h2>
+			            <span class="date"><i class="icon-clock"></i><time datetime="2015-02-20">Feb 20, 2015</time></span><br/>
+			            <span class="category"><i class="icon-tag"></i> meta</span><br/>
+			            <span class="author"><i class="icon-user"></i> Shawn Walton</span>
+			        </header>
+				
+					<div class="entry">**Basic**
+
+</div>
+			
+				</article>-->
+			
+			
+				<article class="blog-post">
+					<div class="blog-post-gutter">
+						<time datetime="2014-10-14">Oct 14, 2014</time><br/>
+						Filed under meta
 					</div>
 					<div class="blog-post-content">
 						<h4><a href="/meta/2014/10/14/what/">Sample Title</a></h4>
 						<p>This is some text. It is interesting text. I am not very good at filler text. Gleebglarbu. Antidisestablishmentarianism.</p>
 					</div>
-				</div>
+				</article>
 			
 				<!--<article>
 			
@@ -51,12 +136,6 @@
 			
 				</article>-->
 			
-		</div>
-		<div class="col-sm-3 col-sm-offset-1 sidebar-col">
-			Wow a sidebar.
-		</div>
-	</div>
-</div>
 
 
 
@@ -70,29 +149,13 @@
     
 </div>
 -->
-		
-		
-		
-		
-			<!--<div class="container">
-				<div class="row">
-					<div class="col-sm-8 content-col">
-						
-						<div class="blog-post">
-							<div class="blog-post-gutter">
-								<h3>This is a test.</h3>
-							</div>
-							<div class="blog-post-content">
-								<h4>Title!</h4>
-							</div>
 						</div>
-					</div>
 					<div class="col-sm-3 col-sm-offset-1 sidebar-col">
-						Hello
+						Wow a sidebar.
 					</div>
 				</div>
-			
-			</div>-->
+			</div>
+			</div>
 		</div>
 	</body>
 </html>

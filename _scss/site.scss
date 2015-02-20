@@ -5,6 +5,8 @@
 			margin-before: $in;
 }
 
+// style
+
 h1 {
 	font-family: 'Lato', sans-serif;
 }
@@ -22,15 +24,24 @@ h3 {
 	padding-top: 3px;
 }
 
-body {
+html, body {
+	height: 100%;
 	margin: 0;
 	font-family: 'Helvetica Neue', sans-serif;
+}
+
+.page {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
 }
 
 .header {
 	color: white;
 	text-align: center;
 	padding: 10px;
+
+	flex: 0 1 auto;
 	
 	a {
 		color: white;
@@ -38,10 +49,11 @@ body {
 }
 
 .content-bg {
-	height: 100%;
 	padding: 50px 5px 10px;
 
-	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(0,0,0,0.66) 35px);
+	flex: 1 1 auto;
+
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(0,0,0,0.66) 35px);
 }
 
 .content-col {
@@ -54,30 +66,42 @@ body {
 	background-color: white;
 }
 
-.blog-post {
-	
+article {
+	margin-bottom: 30px;
+
+	// the magical clearfix
+	&:after {
+		content: " ";
+		display: block; 
+		height: 0; 
+		clear: both;
+	}
 }
 
-$gutter-height: 40px;
+$gutter-height: 50px;
 
 .blog-post-gutter {
 	display: inline-block;
 	height: $gutter-height;
-	width: 200px;
+	width: 150px;
 	padding: 5px 5px 5px 15px;
-	line-height: $gutter-height !important;
+	//line-height: $gutter-height !important;
 	background-color: white;
 	color: black;
+
+	float: left;
 	
-	background: linear-gradient(135deg, transparent 10px, white 0)
+	background: linear-gradient(135deg, transparent 10px, white 0);
 }
 
 .blog-post-content {
 	display: inline-block;
 	padding: 5px 10px 10px 10px;
-	margin-left: 200px;
-	margin-top: -$gutter-height;
+	//margin-left: 150px;
+	//margin-top: -$gutter-height;
 	width: calc(100% - 200px);
 	background-color: white;
 	min-height: 200px;
+
+	float: left;
 }
