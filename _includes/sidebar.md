@@ -1,7 +1,3 @@
----
-title: sidebar
----
-
 About
 =====
 

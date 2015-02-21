@@ -29,8 +29,8 @@
 							{{ content }}
 						</div>
 					<div class="col-sm-4 sidebar-col">
-					{% capture my-include %}{% include sidebar.md %}{% endcapture %}
-						{{ my-include | markdownify }}
+					{% capture fileContent %}{% include sidebar.md %}{% endcapture %}
+						{{ fileContent | markdownify }}
 					</div>
 				</div>
 			</div>
