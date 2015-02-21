@@ -1,13 +1,14 @@
 ---
 layout: default
 ---
-<!-- useless? -->
-<div class="blog-post">
+
+<article class="blog-post">
 	<div class="blog-post-gutter">
-		<h3>This is a test.</h3>
+		<time datetime="{{date|date:"%F"}}">{{date|date:"%b %d, %Y"}}</time><br/>
+		Filed under {{categories | category_links}}
 	</div>
 	<div class="blog-post-content">
-		<h4>{{ page.title }}</h4>
-		<p>{{ content }}</p>
+		<h4><a href="{{url}}">{{ title }}</a></h4>
+		{{ content }}
 	</div>
-</div>
+</article>

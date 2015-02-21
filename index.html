@@ -11,26 +11,11 @@ layout: default
 		<div class="blog-post-content">
 			<h4><a href="{{post.url}}">{{ post.title }}</a></h4>
 			{{ post.content }}
+			<!-- could do post.excerpt if I had long/a lot of posts -->
 		</div>
 	</article>
 
 {% endfor %}
-
-
-<!--<article>
-
-        <header>
-            <h2><a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a></h2>
-            <span class="date"><i class="icon-clock"></i><time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time></span><br/>
-            <span class="category"><i class="icon-tag"></i> {{ post.categories | category_links }}</span><br/>
-            <span class="author"><i class="icon-user"></i> {% if post.author %}{{post.author}}{% else %}{{site.author}}{% endif%}</span>
-        </header>
-	
-		<div class="entry">{{ post.excerpt }}</div>
-
-	</article>-->
-
-
 
 <!--
 <div id="paginator">

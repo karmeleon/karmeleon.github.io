@@ -24,7 +24,15 @@ h3 {
 	padding-top: 3px;
 }
 
-html, body {
+html {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+body {
 	height: 100%;
 	margin: 0;
 	font-family: 'Helvetica Neue', sans-serif;
@@ -102,7 +110,7 @@ $gutter-height: 50px;
 	//margin-top: -$gutter-height;
 	width: calc(100% - 200px);
 	background-color: white;
-	min-height: 200px;
+	//min-height: 200px;
 
 	float: left;
 }
