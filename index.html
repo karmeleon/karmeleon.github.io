@@ -1,22 +1,23 @@
 ---
 layout: default
-title: Home
 ---
 
-{% for page in site.posts %}
-
+{% for post in site.posts %}
 	<article class="blog-post">
 		<div class="blog-post-gutter">
-			<time datetime="{{page.date|date:"%F"}}">{{page.date|date:"%b %d, %Y"}}</time><br/>
-			Filed under {{page.categories | category_links}}
+			<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time><br/>
+			Filed under {{post.categories | category_links}}
 		</div>
 		<div class="blog-post-content">
-			<h4><a href="{{page.url}}">{{ page.title }}</a></h4>
-			{{ excerpt }}
+			<h4><a href="{{post.url}}">{{ post.title }}</a></h4>
+			{{ post.content }}
 		</div>
 	</article>
 
-	<!--<article>
+{% endfor %}
+
+
+<!--<article>
 
         <header>
             <h2><a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a></h2>
@@ -28,10 +29,6 @@ title: Home
 		<div class="entry">{{ post.excerpt }}</div>
 
 	</article>-->
-{% endfor %}
-
-
-
 
 
 
