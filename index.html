@@ -3,18 +3,16 @@ layout: default
 title: Home
 ---
 
-
-<!-- Show last 5 posts here -->
-{% for post in paginator.posts %}
+{% for page in site.posts %}
 
 	<article class="blog-post">
 		<div class="blog-post-gutter">
-			<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time><br/>
-			Filed under {{post.categories | category_links}}
+			<time datetime="{{page.date|date:"%F"}}">{{page.date|date:"%b %d, %Y"}}</time><br/>
+			Filed under {{page.categories | category_links}}
 		</div>
 		<div class="blog-post-content">
-			<h4><a href="{{post.url}}">{{ post.title }}</a></h4>
-			{{ content }}
+			<h4><a href="{{page.url}}">{{ page.title }}</a></h4>
+			{{ excerpt }}
 		</div>
 	</article>
 
