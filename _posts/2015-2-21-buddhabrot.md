@@ -38,23 +38,16 @@ As you may have guessed from the name, the Buddhabrot set is very closely relate
 Racy Operations
 ---------------
 
-The problem with multiple cores working on the same data is that processors can't do much in a single operation. For example, to add 1 to a number, it must first load the number from memory, add 1 to it, then write it back. High-end 2133 MHz RAM takes around 23 CPU cycles to access in each direction assuming the request doesn't have to wait in a queue, and the addition step also takes some time. During those 50 or so cycles, any other core can load the same number, do whatever it wants with it, then write it back. Whichever core writes its data back first will be the one whose result "sticks", overwriting the other core's result entirely.
+Since Buddhabrot requires each thread to access and increment arbitrary "pixels" on the output, a race condition can crop up. You can actually see the result if you check the "Unsafe Mode" box in Pbrot and crank up the number of threads. The result is nearly identical to the default, race condition-free image because of the sheer size of the problem, but I saw an opportunity to investigate different methods to avoid it and decided to try.
 
-In Pbrot, you can enable a race condition using the "Unsafe Mode" checkbox in the OpenMP renderer. The chances of Pbrot actually having a collision are slim due to the sheer number of pixels it processes, so you're not likely to see any visible errors. Shipping a parallel program with a race condition is bad form, though, so I designed the program around avoiding them as much as possible.
-
-56.307 s 4thread safe
-369.747 s 4thread atomic
-44.887 s 4thread unsafe
-426.404 s 4thread critical
-
-The easiest way to do this is to do atomic operations on any shared memory. This uses some x86 instructions originally added in the Intel 486 that cause the fetch-and-add sequence to be coalesced into a single, uninterruptible, but slightly slower operation. This sounds like exactly what we want! The OpenMP syntax for atomics looks like this:
+I ran some tests using OpenMP's two built-in synchronization constructs, `atomic` and `critical`, as well as my own solution and the baseline. Pbrot only accesses the array in one line, so here it is with `atomic`:
 
 {% highlight c %}
 #pragma omp atomic
 	grid[coord]++;
 {% endhighlight %}
 
-Atomic operations are limited to single operations such as fetch-and-add and compare-and-swap. If we wanted to do more than one operation without being interrupted, we would need to use a critical section. This is a section of code with a lock on each side that ensures that only one processor can be executing it at a time. It's more general than an atomic operation, but has a slightly higher overhead and can last longer. OpenMP also has an easy way of implementing them:
+And `critical`:
 
 {% highlight c %}
 #pragma omp critical
@@ -63,7 +56,7 @@ Atomic operations are limited to single operations such as fetch-and-add and com
 }
 {% endhighlight %}
 
-The other option is to drop the whole idea of sharing memory between cores and give each core its own copy of the grid to use race-free. We're allowed to do that in this application because the processor doesn't care what the current value of the grid is; it just wants to increment it by 1. After all cores have finished their grids, it's simple to add them all together and output a final image. This approach will multiply the amount of RAM used by the number of threads we run on, but the lack of slow atomic operations and critical sections could outweigh the cost. The code for this is also straightforward enough:
+The solution that I made up was simply to give each thread its own copy of the output grid, then combine them together at the end. This avoids the overhead of OpenMP's synchronization implementations, but requires far more memory. Its code is also a little more complex, but still not hard:
 
 {% highlight c %}
 for (k = 0; k < numThreads; k++) {
@@ -100,4 +93,4 @@ To further illustrate the role of cache in Buddhabrot, we can do "unsafe" runs o
 
 
 
-[^1]: Tests performed on an Intel i5-4460 with 8 GB DDR3-1866 on Windows 8.1 Pro x64.
+[^1]: Tests performed on an Intel Core i5-4460 with 8 GB DDR3-1866 and EVGA GeForce GTX 970 with 347.52 drivers on Windows 8.1 Pro x64.
