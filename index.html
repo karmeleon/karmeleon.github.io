@@ -4,15 +4,15 @@ layout: default
 
 {% for post in site.posts %}
 	<article class="blog-post">
-		<div class="blog-post-gutter">
-			<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time><br/>
-			Filed under {{post.categories | category_links}}
-		</div>
-		<div class="blog-post-content">
-			<h4><a href="{{post.url}}">{{ post.title }}</a></h4>
-			{{ post.content }}
-			<!-- could do post.excerpt if I had long/a lot of posts -->
-		</div>
+        <div class="blog-post-outline">
+    		<div class="blog-post-content">
+    			<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                <span class="blog-info-line"><time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time></span><br/>
+                <span class="blog-info-line">filed under {{post.categories | category_links}}</span><br/><br/>
+    			{{ post.content }}
+    			<!-- could do post.excerpt if I had long/a lot of posts -->
+    		</div>
+        </div>
 	</article>
 
 {% endfor %}

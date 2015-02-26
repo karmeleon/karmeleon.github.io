@@ -3,43 +3,171 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title> SAMPLE TEXT</title>
+		<title> Blog.</title>
+		<meta name="theme-color" content="#808080">
 		<!-- scripts -->
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.12/d3.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.5/trianglify.min.js"></script>
 		<script type="text/javascript" src="/site.js"></script>
 		<!-- stylesheets -->
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-		<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Khand' rel='stylesheet' type='text/css'>
 		<link href="/css/main.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="page">
 			<div class="header">
-				<h1>Some Blog Thing</h1>
-				<h2>A blog where I talk about code things</h2>
+				<h1><a href="/">Some Blog Thing</a></h1>
+				<h2>A blog where I talk about code things.</h2>
 			</div>	
 			
-			<div class="content-bg">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-8 content-col">
-							
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8 content-col">
+						
 	<article class="blog-post">
-		<div class="blog-post-gutter">
-			<time datetime="2015-02-20">Feb 20, 2015</time><br/>
-			Filed under jekyll
-		</div>
-		<div class="blog-post-content">
-			<h4><a href="/jekyll/2015/02/20/jekyll-pls/">Jekyll is picky.</a></h4>
-			<p>I just spent four hours wondering why my Markdown wasn’t getting parsed correctly, then realized it was because my posts were all <code>.markup</code> files. Makes a lot of sense in hindsight, but it didn’t occur to me at the time.</p>
+        <div class="blog-post-outline">
+    		<div class="blog-post-content">
+    			<h3><a href="/2015/02/21/buddhabrot/">Buddhabrot?</a></h3>
+                <span class="blog-info-line"><time datetime="2015-02-21">Feb 21, 2015</time></span><br/>
+                <span class="blog-info-line">filed under </span><br/><br/>
+    			<p><img src="/assets/buddhabrot10.png" alt="Buddhabrot with a maximum of 10 iterations" /></p>
+
+<p>WIP!</p>
+
+<p>So, if you haven’t been able to tell from the sidebar already, I do a lot of stuff with fractals, for two reasons: first, they present a fun challenge to parallelize and can be incredibly satisfying to get working, and second, they make pretty pictures!ting them by hand would
+The second one was particularly important when I found <a href="https://en.wikipedia.org/wiki/Buddhabrot">the Wikipedia article on Buddhabrot</a> one night about four years ago. I decided it looked so cool that I was gonna code it the very next day! A week later, I had a somewhat-working implementation written in Java (since it was the only language I knew at the time) using <a href="http://www.jocl.org/">JOCL</a>. It was fast, but the images it produced were downright garbage since I had zero knowledge of parallel programming other than “it made things faster”.</p>
+
+<p>Over this past winter break, I had a ton of time and nothing to do, so I decided to revive the project in C. I had just aced a parallel programming class, so I had the knowledge I lacked when I tried so long ago. I ended up pulling it off, learning a ton in the process.</p>
+
+<h2 id="fractals-101">Fractals 101</h2>
+
+<p>Fractals are just mathematically-generated images with infinite complexity. That is, no matter how far you zoom in, you’ll always see more detail. The beautiful part of them is that they’re usually extremely simple to describe. Jonathan Coulton even explained the Mandelbrot set in just a few lines <a href="https://www.youtube.com/watch?v=AGUlJus5kpY">of his eponymous song</a>:</p>
+
+<blockquote>
+  <p>Just take a point called z in the complex plane,</p>
+
+  <p>Let z<sub>1</sub> be z<sup>2</sup>+z,</p>
+
+  <p>z<sub>2</sub> is z<sub>1</sub><sup>2</sup>+z,</p>
+
+  <p>z<sub>3</sub> is z<sub>2</sub><sup>2</sup>+z, and so on</p>
+
+  <p>If the series of z<sub>(n)</sub> will always stay,</p>
+
+  <p>Close to z and never trend away,</p>
+
+  <p>That point is in the Mandelbrot set.</p>
+</blockquote>
+
+<p>As you may have guessed from the name, the Buddhabrot set is very closely related to the Mandelbrot set. The only difference is that the Buddhabrot set records and plots every value of z on the image rather than simply using them to determine a point’s membership in the set. This tiny tweak to the formula makes it much more difficult to compute in parallel because it requires multiple threads to potentially access the same pixel’s data, a problem known as a race condition. The Mandelbrot set, on the other hand, computes each pixel independently of all other pixels, making that computation embarrasingly parallel and much easier to execute.</p>
+
+<h2 id="racy-operations">Racy Operations</h2>
+
+<p>The problem with multiple cores working on the same data is that processors can’t do much in a single operation. For example, to add 1 to a number, it must first load the number from memory, add 1 to it, then write it back. High-end 2133 MHz RAM takes around 23 CPU cycles to access in each direction assuming the request doesn’t have to wait in a queue, and the addition step also takes some time. During those 50 or so cycles, any other core can load the same number, do whatever it wants with it, then write it back. Whichever core writes its data back first will be the one whose result “sticks”, overwriting the other core’s result entirely.</p>
+
+<p>In Pbrot, you can enable a race condition using the “Unsafe Mode” checkbox in the OpenMP renderer. The chances of Pbrot actually having a collision are slim due to the sheer number of pixels it processes, so you’re not likely to see any visible errors. Shipping a parallel program with a race condition is bad form, though, so I designed the program around avoiding them as much as possible.</p>
+
+<p>56.307 s 4thread safe
+369.747 s 4thread atomic
+44.887 s 4thread unsafe
+426.404 s 4thread critical</p>
+
+<p>The easiest way to do this is to do atomic operations on any shared memory. This uses some x86 instructions originally added in the Intel 486 that cause the fetch-and-add sequence to be coalesced into a single, uninterruptible, but slightly slower operation. This sounds like exactly what we want! The OpenMP syntax for atomics looks like this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#pragma omp atomic</span>
+	<span class="n">grid</span><span class="p">[</span><span class="n">coord</span><span class="p">]</span><span class="o">++</span><span class="p">;</span></code></pre></div>
+
+<p>Atomic operations are limited to single operations such as fetch-and-add and compare-and-swap. If we wanted to do more than one operation without being interrupted, we would need to use a critical section. This is a section of code with a lock on each side that ensures that only one processor can be executing it at a time. It’s more general than an atomic operation, but has a slightly higher overhead and can last longer. OpenMP also has an easy way of implementing them:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#pragma omp critical</span>
+<span class="p">{</span>
+	<span class="n">grid</span><span class="p">[</span><span class="n">coord</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The other option is to drop the whole idea of sharing memory between cores and give each core its own copy of the grid to use race-free. We’re allowed to do that in this application because the processor doesn’t care what the current value of the grid is; it just wants to increment it by 1. After all cores have finished their grids, it’s simple to add them all together and output a final image. This approach will multiply the amount of RAM used by the number of threads we run on, but the lack of slow atomic operations and critical sections could outweigh the cost. The code for this is also straightforward enough:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">numThreads</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">grid</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">OMPbucket_t</span><span class="p">)</span> <span class="o">*</span> <span class="n">gridSize</span> <span class="o">*</span> <span class="n">gridSize</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ...</span>
+
+<span class="n">grid</span><span class="p">[</span><span class="n">threadNum</span><span class="p">][</span><span class="n">coord</span><span class="p">]</span><span class="o">++</span><span class="p">;</span></code></pre></div>
+
+<p>Now that we have our code, let’s take a look at the results! <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<p><img src="/assets/raceresults.png" alt="Results of race condition avoidance methods" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Time (s)</th>
+      <th>Time (relative)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Unsafe (race condition)</td>
+      <td>44.887</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <td>Atomic</td>
+      <td>369.747</td>
+      <td>8.232</td>
+    </tr>
+    <tr>
+      <td>Critical</td>
+      <td>426.404</td>
+      <td>9.499</td>
+    </tr>
+    <tr>
+      <td>Independent grids</td>
+      <td>56.307</td>
+      <td>1.254</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Right away, we can see that atomic operations and critical sections are much, much slower than our baseline. An 8x performance penalty is unacceptable. I don’t know enough about the implementation of atomic operations or mutexes on x86 processors to take a guess as to why their performance is so bad. The slight performance degradation in the independent grids approach is something I can explain, though.</p>
+
+<h2 id="cache-money">Cache Money</h2>
+
+<p>While your shiny new DDR4-2133 RAM may seem fast with its 17.1 GB/s transfer rate, it can’t even come close to providing enough data to feed a hungry CPU. Faster system memory would be prohibitively expensive, so chipmakers embed a small amount of quick memory on the CPU die. This cache is physically closer to the rest of the processor and uses a different memory technology, allowing it to be accessed in just a few clock cycles compared to the &gt;10 seen on main memory and at bandwidths well over 100 GB/s! Cache is organized into (usually) three different levels, called L1, L2, and L3. L1 is the fastest, but is also the smallest at around 256 KB. L3 is the largest, about 6 MB, but even though it’s the slowest, it’s still much faster than system RAM.</p>
+
+<p>The slightly degraded performance of the independent grids approach is due to the effects of caching. The test involves a 10000 x 10000 grid of <code>uint16</code>s, which comes out to 200 MB per core. My CPU only has 9 MB of total L1+L2+L3 cache, so it can fit only a small amount of one grid into cache at a time. Quadrupling that data will greatly reduce the already-low cache hit rate and cause a noticeable performance impact. A quick test with a 1000 x 1000 (2 MB) grid shows identical performance under both conditions, confirming this theory.</p>
+
+<p>To further illustrate the role of cache in Buddhabrot, we can do “unsafe” runs on grids of varying sizes and look at the resulting graph:</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Tests performed on an Intel i5-4460 with 8 GB DDR3-1866 on Windows 8.1 Pro x64. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    			<!-- could do post.excerpt if I had long/a lot of posts -->
+    		</div>
+        </div>
+	</article>
+
+
+	<article class="blog-post">
+        <div class="blog-post-outline">
+    		<div class="blog-post-content">
+    			<h3><a href="/jekyll/2015/02/20/jekyll-pls/">Jekyll is picky.</a></h3>
+                <span class="blog-info-line"><time datetime="2015-02-20">Feb 20, 2015</time></span><br/>
+                <span class="blog-info-line">filed under jekyll</span><br/><br/>
+    			<p>I just spent four hours wondering why my Markdown wasn’t getting parsed correctly, then realized it was because my posts were all <code>.markup</code> files. Makes a lot of sense in hindsight, but it didn’t occur to me at the time.</p>
 
 <p>:(</p>
 
-			<!-- could do post.excerpt if I had long/a lot of posts -->
-		</div>
+    			<!-- could do post.excerpt if I had long/a lot of posts -->
+    		</div>
+        </div>
 	</article>
 
 
@@ -51,22 +179,25 @@
     
 </div>
 -->
-						</div>
-					<div class="col-sm-4 sidebar-col">
-					
-						<h1 id="about">About</h1>
+					</div>
+					<div class="col-sm-4 sidebar-outline">
+						<div class="sidebar-col">
+						
+							<h2 id="about">About</h2>
 
-<p>This is a blog I made to talk about programming type things that I find or write. If you find the stuff here interesting, feel free to <a href="smwalto2@illinois.edu">shoot me an email</a> or <a href="/assets/resume.pdf">take a look at my resumé</a>! There are a few older things on <a href="https://github.com/shawnwalton">my Github</a> that I haven’t written about, so you might as well go check that out too.</p>
+<p>This is a blog I made to talk about programming type things that I find or write. If you find the stuff here interesting, feel free to  shoot me an email at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#115;&#109;&#119;&#097;&#108;&#116;&#111;&#050;&#064;&#105;&#108;&#108;&#105;&#110;&#111;&#105;&#115;&#046;&#101;&#100;&#117;">&#115;&#109;&#119;&#097;&#108;&#116;&#111;&#050;&#064;&#105;&#108;&#108;&#105;&#110;&#111;&#105;&#115;&#046;&#101;&#100;&#117;</a> or <a href="/assets/resume.pdf">take a look at my resumé</a>! There are a few older things on <a href="https://github.com/shawnwalton">my Github</a> that I haven’t written about, so you might as well go check that out too.</p>
 
-<h1 id="links">Links</h1>
+<hr />
+
+<h2 id="links">Links</h2>
 <ul>
   <li><a href="https://shawnwalton.github.io/WGL-fractal/">WebGL Mandelbrot set viewer</a></li>
   <li><a href="https://github.com/shawnwalton/Pbrot/">OpenMP/OpenCL Buddhabrot set generator</a></li>
 </ul>
 
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</body>

@@ -1,3 +1,4 @@
+/*
 $(document).ready(function() {
     // do trianglify things
     var t = new Trianglify({
@@ -8,3 +9,4 @@ $(document).ready(function() {
     var background = t.generate(document.body.clientWidth, document.body.clientHeight);
     $('body').css('background-image', background.dataUrl);
 });
+*/
