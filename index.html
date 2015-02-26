@@ -4,38 +4,48 @@ layout: default
 
 {% for post in site.posts %}
 	<article class="blog-post">
-        <div class="blog-post-outline">
-    		<div class="blog-post-content">
-    			<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                <span class="blog-info-line"><time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time></span><br/>
-                <span class="blog-info-line">filed under {{post.categories | category_links}}</span><br/><br/>
-    			{{ post.content }}
-    			<!-- could do post.excerpt if I had long/a lot of posts -->
-    		</div>
-        </div>
+		<div class="blog-post-outline">
+			<div class="blog-post-content">
+				<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+				<span class="blog-info-line"><time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time></span><br/><br/>
+				<!-- <span class="blog-info-line">filed under {{post.categories | category_links}}</span><br/><br/> -->
+				{% if post.content contains '<!--more-->' %}
+    				{{ post.content | split:'<!--more-->' | first }}
+				{% else %}
+ 					<!-- Case for when no excerpt is defined -->
+ 					<!-- Inserts the entire post. Should only be done for short posts -->
+ 					{{ post.content }}
+				{% endif %}
+				{% if post.content contains '<!--more-->' %}
+					<div class="blog-full-post">
+						<h3><a href="{{ post.url }}">Full post</a></h3>
+					</div>
+				{% endif %}
+				<!-- could do post.excerpt if I had long/a lot of posts -->
+			</div>
+		</div>
 	</article>
-
 {% endfor %}
 
 <!--
 <div id="paginator">
-    {% if paginator.next_page %}
-            <a href="{{site.baseurl}}/page{{paginator.next_page}}">
-            &laquo; Older Posts</a>
-    {% endif %}
+	{% if paginator.next_page %}
+			<a href="{{site.baseurl}}/page{{paginator.next_page}}">
+			&laquo; Older Posts</a>
+	{% endif %}
 
-    {% if paginator.previous_page %}
-        {% if paginator.previous_page == 1 %}
-                <span class="more">
-                <a href="{{site.baseurl}}/">
-                Newer Posts &raquo; </a>
-                </span>
-        {% else %}
-                <span class="more">
-                <a href="{{site.baseurl}}/page{{paginator.previous_page}}">
-                Newer Posts &raquo; </a>
-                </span>
-        {% endif %}
-    {% endif %}
+	{% if paginator.previous_page %}
+		{% if paginator.previous_page == 1 %}
+				<span class="more">
+				<a href="{{site.baseurl}}/">
+				Newer Posts &raquo; </a>
+				</span>
+		{% else %}
+				<span class="more">
+				<a href="{{site.baseurl}}/page{{paginator.previous_page}}">
+				Newer Posts &raquo; </a>
+				</span>
+		{% endif %}
+	{% endif %}
 </div>
 -->

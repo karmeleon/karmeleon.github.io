@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Buddhabrot?
-
 ---
 
 ![Buddhabrot with a maximum of 10 iterations](/assets/buddhabrot10.png)
@@ -12,6 +11,8 @@ So, if you haven't been able to tell from the sidebar already, I do a lot of stu
 The second one was particularly important when I found [the Wikipedia article on Buddhabrot](https://en.wikipedia.org/wiki/Buddhabrot) one night about four years ago. I decided it looked so cool that I was gonna code it the very next day! A week later, I had a somewhat-working implementation written in Java (since it was the only language I knew at the time) using [JOCL](http://www.jocl.org/). It was fast, but the images it produced were downright garbage since I had zero knowledge of parallel programming other than "it made things faster".
 
 Over this past winter break, I had a ton of time and nothing to do, so I decided to revive the project in C. I had just aced a parallel programming class, so I had the knowledge I lacked when I tried so long ago. I ended up pulling it off, learning a ton in the process.
+
+<!--more-->
 
 Fractals 101
 ------------
