@@ -5,7 +5,7 @@ layout: default
 <article class="blog-post">
     <div class="blog-post-outline">
 		<div class="blog-post-content">
-			<h3><a href="{{ url }}">{{ page.title }}</a></h3>
+			<h3><a href="{{ page.url }}">{{ page.title }}</a></h3>
             <span class="blog-info-line"><time datetime="{{ page.date|date:"%F" }}">{{ page.date|date:"%b %d, %Y" }}</time></span><br/><br/>
             <!-- <span class="blog-info-line">filed under {{ categories | category_links }}</span><br/><br/> -->
 			{{ content }}
