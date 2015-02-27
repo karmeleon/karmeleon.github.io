@@ -79,6 +79,82 @@ Now that we have our code, let's take a look at the results! [^1]
 
 Right away, we can see that atomic operations and critical sections are much, much slower than our baseline. An 8x performance penalty is unacceptable. I don't know enough about the implementation of atomic operations or mutexes on x86 processors to take a guess as to why their performance is so bad, but these results reveal that they should be used sparingly whenever possible. The slight performance degradation in the independent grids approach is easily explained by caching; running this test with a smaller grid size but higher supersampling gives virtually identical results for the unsafe and independent grid runs. Assuming the system has enough RAM to fit all the extra copies of the grid, this approach is by far the best for avoiding race conditions.
 
+
+Work Smarter, Not Harder
+------------------------
+
+Buddhabrot requires calculating the z values of each point until either we reach the maximum allowed number of iterations, in which case we just move onto the next point and start over, or one z value gets too far away from c. If that happens we start the calculations over, writing each value of z to the grid. It looks something like this:
+
+{% highlight c %}
+for(i = 0; i < maxIterations; i++) {
+	// calculate z_n+1 from z_n and c
+	zNext = zLast * zLast + c;
+	orbitDistance = distance(zNext, c);
+	if(orbitDistance > maxOrbit) {
+		// this point is *not* in the Mandelbrot set, so start
+		// the calculations over, recording each value of z until
+		// z leaves the scope of the fractal
+		zLast = c;
+		for(j = 0; j < i; j++) {
+			zNext = zLast * zLast + c;
+			writeToGrid(zNext);
+		}
+		break;
+	}
+	// else keep iterating until this point gets too far away
+	// or we hit maxIterations
+}
+{% endhighlight %}
+
+As you can see, if a point is determined to be out of the set, the number of calculations for that point is doubled. I saw that and decided to write all z values to a cache the first time they're calculated, them simply read them back from the cache and write them to the grid if the point ends up being out of the set. Ideally, these buffers would stay in L1 cache and not interfere with grid access rate. L1 data accesses have taken a flat 4 clock cycles since at least Sandy Bridge on Intel processors [^2], which should be substantially faster than computing the values again. The code for this cached implementation is below:
+
+{% highlight c %}
+for(i = 0; i < maxIterations; i++) {
+	// calculate z_n+1 from z_n and c
+	zNext = zLast * zLast + c;
+	// save the new z value to the cache
+	cache[i] = zNext;
+	orbitDistance = distance(zNext, c);
+	if(orbitDistance > maxOrbit) {
+		// this point is *not* in the Mandelbrot set, so read
+		// the z values from cache, recording them all to the grid
+		for(j = 0; j < i; j++) {
+			zNext = cache[j];
+			writeToGrid(zNext);
+		}
+		break;
+	}
+	// else keep iterating until this point gets too far away
+	// or we hit maxIterations
+}
+{% endhighlight %}
+
+I didn't actually test the performance of this change when I wrote it, so why not do it now? The first run with each method will be with a grid size of 10000 x 10000 at 7x supersampling and the second will be 700 x 700 at 100x supersampling, both with 4 threads. This keeps the total calculations the same, but with working sets of 800 and 3.92 MB respectively, they should show the effects of cache. I'll be using [Intel PCM](https://software.intel.com/en-us/articles/intel-performance-counter-monitor) to gather statistics on L2 and L3 cache hit rate as well as instructions per clock. Without further ado:
+
+![Results of Caching Test](/assets/BuddhabrotCaching.png)
+
+| Run            | Time (s) | Avg. IPC | Avg. L2 Hit Rate | Avg. L3 Hit Rate |
+|----------------|----------|----------|------------------|------------------|
+| Cached Large   | 78.875   | 1.621    | 0.042            | 0.213            |
+| Uncached Large | 91.151   | 1.144    | 0.058            | 0.205            |
+| Cached Small   | 57.243   | 2.245    | 0.257            | 0.642            |
+| Uncached Small | 71.422   | 1.485    | 0.242            | 0.624            |
+
+The z-cache increaded performance by 16% for the large runs and 25% for the small! These time improvements are reflected in the average IPC figures, but the L2 and L3 cache hit rates don't change enough to be able to draw any conclusions from. Unfortunately, PCM doesn't report memory bandwidth on non-Xeon processors and doesn't tell L1 hit rates at all, so while I can't prove L1 hit rates were behind the significantly increased performance, it's definitely looking like the most likely theory.
+
+Just for fun, I graphed the IPC and hit rates over time, then overlaid it with the generated fractal and the results are beautiful:
+
+![Performances metrics vs. Time at 10k](/assets/BuddhabrotCached10kOverlay.png)
+
+You can see that IPC and L3 hit rates are high where the program processed points that left the Mandelbrot set immediately, while points that stayed in the set longer and caused more grid accesses were correlated with lower IPC and cache rates as the main memory had to be accessed more often.
+
+I did the same with the 700 x 700 run, but those results weren't as pretty:
+
+![Performances metrics vs. Time at 700](/assets/BuddhabrotCached700Overlay.png)
+
+Since the entire working set more or less fit in cache, metrics stayed relatively high throughout the run. IPC seems to follow a bell curve of sorts, mostly immune to the fluctuations of the 10k run. I think this is because the more computationally demanding points require more floating point performance and aren't slowed down by system RAM access time anymore, allowing Haswell's full computational power to show through. If you're interested in the other metrics PCM captures, the full data is available [here](https://docs.google.com/spreadsheets/d/1Stp8kEkmRlnzYo3UIawtSkqR8BxikpwOeyNwY4g9oJ0/edit?usp=sharing).
+
 More to come! I'm writing this in my free time.
 
 [^1]: Tests performed on an Intel Core i5-4460 with 8 GB DDR3-1866 and an EVGA GeForce GTX 970 with 347.52 drivers on Windows 8.1 Pro x64.
+[^2]: [Via SiSoftware](http://www.sisoftware.co.uk/?d=qa&f=mem_hsw)
