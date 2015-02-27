@@ -37,7 +37,7 @@ As you may have guessed from the name, the Buddhabrot set is very closely relate
 Racy Operations
 ---------------
 
-Since Buddhabrot requires each thread to access and increment arbitrary "pixels" on the output, a race condition is sure to crop up if steps are not taken to mitigate it. If you check the "Unsafe Mode" box in Pbrot and use more than one thread, that's exactly what'll happen. The image is nearly identical to the default, race condition-free image because of the sheer size of the problem, but I saw an opportunity to investigate different methods to avoid it and decided to try.
+Since Buddhabrot requires each thread to access and increment arbitrary "pixels" on the output, a race condition is sure to crop up if steps are not taken to mitigate it. If you check the "Unsafe Mode" box in Pbrot and use more than one thread, that's exactly what'll happen. The image is nearly identical to the default, race condition-free image because of the sheer resolution of the problem, but I saw an opportunity to investigate different methods to avoid it and decided to try them out.
 
 I ran some tests using OpenMP's two built-in synchronization constructs, `atomic` and `critical`, as well as my own solution and the baseline. Pbrot only accesses the array in one line, so here it is with `atomic`:
 
@@ -55,7 +55,7 @@ And `critical`:
 }
 {% endhighlight %}
 
-The solution that I made up was simply to give each thread its own copy of the output grid, then combine them together at the end. This avoids the overhead of OpenMP's synchronization implementations, but requires far more memory. Its code is also a little more complex, but still not hard:
+The solution that I made up on my onw and eventually used was simply to give each thread its own copy of the output grid, then combine them together at the end. This avoids the overhead of OpenMP's synchronization implementations, but requires far more memory. Its code is also a little more complex, but still not hard:
 
 {% highlight c %}
 for (k = 0; k < numThreads; k++) {
@@ -84,7 +84,7 @@ Right away, we can see that atomic operations and critical sections are much, mu
 Work Smarter, Not Harder
 ------------------------
 
-Buddhabrot requires calculating the z values of each point until either we reach the maximum allowed number of iterations, in which case we just move onto the next point and start over, or one z value gets too far away from c. If that happens we start the calculations over, writing each value of z to the grid. It looks something like this:
+Buddhabrot requires calculating the z values of each point until we either reach the maximum allowed number of iterations, in which case we just move onto the next point and start over, or one z value gets too far away from c. If that happens we start the calculations over, writing each z to the grid. It looks something like this:
 
 {% highlight c %}
 for(i = 0; i < maxIterations; i++) {
@@ -107,7 +107,7 @@ for(i = 0; i < maxIterations; i++) {
 }
 {% endhighlight %}
 
-As you can see, if a point is determined to be out of the set, the number of calculations for that point is doubled. I saw that and decided to write all z values to a cache the first time they're calculated, them simply read them back from the cache and write them to the grid if the point ends up being out of the set. Ideally, these buffers would stay in L1 cache and not interfere with grid access rate. L1 data accesses have taken a flat 4 clock cycles since at least Sandy Bridge on Intel processors [^2], which should be substantially faster than computing the values again. The code for this cached implementation is below:
+As you can see, if a point is determined to be out of the set, the number of calculations for that point is doubled. When I noticed it, I designed a fix. My idea was to write all z values to a cache the first time they're calculated, them simply read them back from the cache and write them to the grid if the point ends up being out of the set. Ideally, these buffers would stay in L1 cache and not interfere with grid access rate. L1 data accesses have taken a flat 4 clock cycles since at least Sandy Bridge on Intel processors [^2], which should be substantially faster than computing the values again. The code for this cached implementation is below:
 
 {% highlight c %}
 for(i = 0; i < maxIterations; i++) {
@@ -130,7 +130,7 @@ for(i = 0; i < maxIterations; i++) {
 }
 {% endhighlight %}
 
-I didn't actually test the performance of this change when I wrote it, so why not do it now? The first run with each method will be with a grid size of 10000 x 10000 at 7x supersampling and the second will be 700 x 700 at 100x supersampling, both with 4 threads. This keeps the total calculations the same, but with working sets of 800 and 3.92 MB respectively, they should show the effects of cache. I'll be using [Intel PCM](https://software.intel.com/en-us/articles/intel-performance-counter-monitor) to gather statistics on L2 and L3 cache hit rate as well as instructions per clock. Without further ado:
+I realized I never actually tested the performance of this change when I wrote it, so why not do it now? The first run with each approach will be with a grid size of 10000 x 10000 at 7x supersampling, while the second will be 700 x 700 at 100x supersampling. This keeps the total number of calculations the same, but with working sets of 800 MB and 3.92 MB spread across four threads, they'll show the advantages of having a cache-sized data set. I'll be using [Intel PCM](https://software.intel.com/en-us/articles/intel-performance-counter-monitor) to gather statistics on L2 and L3 cache hit rate as well as instructions per clock. Without further ado:
 
 ![Results of Caching Test](/assets/BuddhabrotCaching.png)
 
@@ -141,19 +141,19 @@ I didn't actually test the performance of this change when I wrote it, so why no
 | Cached Small   | 57.243   | 2.245    | 0.257            | 0.642            |
 | Uncached Small | 71.422   | 1.485    | 0.242            | 0.624            |
 
-The z-cache increaded performance by 16% for the large runs and 25% for the small! These time improvements are reflected in the average IPC figures, but the L2 and L3 cache hit rates don't change enough to be able to draw any conclusions from. Unfortunately, PCM doesn't report memory bandwidth on non-Xeon processors and doesn't tell L1 hit rates at all, so while I can't prove L1 hit rates were behind the significantly increased performance, it's definitely looking like the most likely theory.
+The z-cache increaded performance by 16% for the large runs and 25% for the small! These time improvements are reflected in the average IPC figures. The L2 and L3 cache hit rates remain mostly unchanged, but this makes sense; z-cache or not, the program still needs to hit the grid the same number of times. Unfortunately, PCM doesn't report memory bandwidth on non-Xeon processors and doesn't tell L1 hit rates at all. I'd be interested to see how much work the L1 caches did to increase the IPC so much.
 
 Just for fun, I graphed the IPC and hit rates over time, then overlaid it with the generated fractal and the results are beautiful:
 
 ![Performances metrics vs. Time at 10k](/assets/BuddhabrotCached10kOverlay.png)
 
-You can see that IPC and L3 hit rates are high where the program processed points that left the Mandelbrot set immediately, while points that stayed in the set longer and caused more grid accesses were correlated with lower IPC and cache rates as the main memory had to be accessed more often.
+You can see that IPC and L3 hit rates are high where the program processed points that left the Mandelbrot set immediately, while points that stayed in the set longer and caused more grid accesses were correlated with lower IPC and cache rates as the main memory had to be accessed more often. Note that the columns near the left and right sides are processed much more quickly than the ones in the middle, so the graph isn't even overlaid perfectly.
 
 I did the same with the 700 x 700 run, but those results weren't as pretty:
 
 ![Performances metrics vs. Time at 700](/assets/BuddhabrotCached700Overlay.png)
 
-Since the entire working set more or less fit in cache, metrics stayed relatively high throughout the run. IPC seems to follow a bell curve of sorts, mostly immune to the fluctuations of the 10k run. I think this is because the more computationally demanding points require more floating point performance and aren't slowed down by system RAM access time anymore, allowing Haswell's full computational power to show through. If you're interested in the other metrics PCM captures, the full data is available [here](https://docs.google.com/spreadsheets/d/1Stp8kEkmRlnzYo3UIawtSkqR8BxikpwOeyNwY4g9oJ0/edit?usp=sharing).
+Since the entire working set more or less fits in cache, metrics stayed relatively high throughout the run. IPC seems to follow a bell curve of sorts, mostly immune to the fluctuations seen in the 10k run. I think this is because the more computationally demanding points require more floating point performance and aren't slowed down by system RAM access time anymore, allowing Haswell's full computational power to show through. If you're interested in the other metrics PCM captures, the full data is available [here](https://docs.google.com/spreadsheets/d/1Stp8kEkmRlnzYo3UIawtSkqR8BxikpwOeyNwY4g9oJ0/edit?usp=sharing).
 
 More to come! I'm writing this in my free time.
 
