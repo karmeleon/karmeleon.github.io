@@ -31,12 +31,12 @@ Fractals are just mathematically-generated images with infinite complexity. That
 >
 > That point is in the Mandelbrot set.
 
-As you may have guessed from the name, the Buddhabrot set is very closely related to the Mandelbrot set. The only difference is that the Buddhabrot set records and plots every value of z on the image rather than simply using them to determine a point's membership in the set. This tiny tweak to the formula makes it much more difficult to compute in parallel because it requires multiple threads to potentially access the same pixel's data, a problem known as a race condition. The Mandelbrot set, on the other hand, computes each pixel independently of all other pixels, making that computation embarrasingly parallel and much easier to execute.
+As you may have guessed from the name, the Buddhabrot set is very closely related to the Mandelbrot set. The only difference is that the Buddhabrot set records and plots every value of z on the image rather than simply using them to determine a point's membership in the set. This tiny tweak to the formula makes it more complicated to compute in parallel because it requires multiple threads to potentially access the same pixel's data simultaneously. The Mandelbrot set, on the other hand, computes each pixel independently of all other pixels, making that computation embarrasingly parallel and much easier to execute.
 
 Racy Operations
 ---------------
 
-Since Buddhabrot requires each thread to access and increment arbitrary "pixels" on the output, a race condition can crop up. You can actually see the result if you check the "Unsafe Mode" box in Pbrot and crank up the number of threads. The result is nearly identical to the default, race condition-free image because of the sheer size of the problem, but I saw an opportunity to investigate different methods to avoid it and decided to try.
+Since Buddhabrot requires each thread to access and increment arbitrary "pixels" on the output, a race condition is sure to crop up if steps are not taken to mitigate it. If you check the "Unsafe Mode" box in Pbrot and use more than one thread, that's exactly what'll happen. The image is nearly identical to the default, race condition-free image because of the sheer size of the problem, but I saw an opportunity to investigate different methods to avoid it and decided to try.
 
 I ran some tests using OpenMP's two built-in synchronization constructs, `atomic` and `critical`, as well as my own solution and the baseline. Pbrot only accesses the array in one line, so here it is with `atomic`:
 
@@ -77,8 +77,8 @@ Now that we have our code, let's take a look at the results! [^1]
 | Critical                | 426.404  | 9.499           |
 | Independent grids       | 56.307   | 1.254           |
 
-Right away, we can see that atomic operations and critical sections are much, much slower than our baseline. An 8x performance penalty is unacceptable. I don't know enough about the implementation of atomic operations or mutexes on x86 processors to take a guess as to why their performance is so bad. The slight performance degradation in the independent grids approach is easily explained by caching; running this test with a smaller grid size but higher supersampling gives virtually identical results for the unsafe and independent grid runs.
+Right away, we can see that atomic operations and critical sections are much, much slower than our baseline. An 8x performance penalty is unacceptable. I don't know enough about the implementation of atomic operations or mutexes on x86 processors to take a guess as to why their performance is so bad, but these results reveal that they should be used sparingly whenever possible. The slight performance degradation in the independent grids approach is easily explained by caching; running this test with a smaller grid size but higher supersampling gives virtually identical results for the unsafe and independent grid runs. Assuming the system has enough RAM to fit all the extra copies of the grid, this approach is by far the best for avoiding race conditions.
 
 More to come! I'm writing this in my free time.
 
-[^1]: Tests performed on an Intel Core i5-4460 with 8 GB DDR3-1866 and EVGA GeForce GTX 970 with 347.52 drivers on Windows 8.1 Pro x64.
+[^1]: Tests performed on an Intel Core i5-4460 with 8 GB DDR3-1866 and an EVGA GeForce GTX 970 with 347.52 drivers on Windows 8.1 Pro x64.
