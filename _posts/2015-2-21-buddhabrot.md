@@ -5,8 +5,6 @@ title: Buddhabrot?
 
 ![Buddhabrot with a maximum of 10 iterations](/assets/buddhabrot10.png)
 
-WIP!
-
 So, if you haven't been able to tell from the sidebar already, I do a lot of stuff with fractals, for two reasons: first, they present a fun challenge to parallelize and can be incredibly satisfying to get working, and second, they make pretty pictures!ting them by hand would
 The second one was particularly important when I found [the Wikipedia article on Buddhabrot](https://en.wikipedia.org/wiki/Buddhabrot) one night about four years ago. I decided it looked so cool that I was gonna code it the very next day! A week later, I had a somewhat-working implementation written in Java (since it was the only language I knew at the time) using [JOCL](http://www.jocl.org/). It was fast, but the images it produced were downright garbage since I had zero knowledge of parallel programming other than "it made things faster".
 
@@ -79,18 +77,8 @@ Now that we have our code, let's take a look at the results! [^1]
 | Critical                | 426.404  | 9.499           |
 | Independent grids       | 56.307   | 1.254           |
 
-Right away, we can see that atomic operations and critical sections are much, much slower than our baseline. An 8x performance penalty is unacceptable. I don't know enough about the implementation of atomic operations or mutexes on x86 processors to take a guess as to why their performance is so bad. The slight performance degradation in the independent grids approach is something I can explain, though.
+Right away, we can see that atomic operations and critical sections are much, much slower than our baseline. An 8x performance penalty is unacceptable. I don't know enough about the implementation of atomic operations or mutexes on x86 processors to take a guess as to why their performance is so bad. The slight performance degradation in the independent grids approach is easily explained by caching; running this test with a smaller grid size but higher supersampling gives virtually identical results for the unsafe and independent grid runs.
 
-Cache Money
------------
-
-While your shiny new DDR4-2133 RAM may seem fast with its 17.1 GB/s transfer rate, it can't even come close to providing enough data to feed a hungry CPU. Faster system memory would be prohibitively expensive, so chipmakers embed a small amount of quick memory on the CPU die. This cache is physically closer to the rest of the processor and uses a different memory technology, allowing it to be accessed in just a few clock cycles compared to the >10 seen on main memory and at bandwidths well over 100 GB/s! Cache is organized into (usually) three different levels, called L1, L2, and L3. L1 is the fastest, but is also the smallest at around 256 KB. L3 is the largest, about 6 MB, but even though it's the slowest, it's still much faster than system RAM.
-
-The slightly degraded performance of the independent grids approach is due to the effects of caching. The test involves a 10000 x 10000 grid of `uint16`s, which comes out to 200 MB per core. My CPU only has 9 MB of total L1+L2+L3 cache, so it can fit only a small amount of one grid into cache at a time. Quadrupling that data will greatly reduce the already-low cache hit rate and cause a noticeable performance impact. A quick test with a 1000 x 1000 (2 MB) grid shows identical performance under both conditions, confirming this theory.
-
-To further illustrate the role of cache in Buddhabrot, we can do "unsafe" runs on grids of varying sizes and look at the resulting graph:
-
-
-
+More to come! I'm writing this in my free time.
 
 [^1]: Tests performed on an Intel Core i5-4460 with 8 GB DDR3-1866 and EVGA GeForce GTX 970 with 347.52 drivers on Windows 8.1 Pro x64.
