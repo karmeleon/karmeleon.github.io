@@ -155,7 +155,7 @@ I did the same with the 700 x 700 run, but those results weren't as pretty:
 
 Since the entire working set more or less fits in cache, metrics stayed relatively high throughout the run. IPC seems to follow a bell curve of sorts, mostly immune to the fluctuations seen in the 10k run. I think this is because the more computationally demanding points require more floating point performance and aren't slowed down by system RAM access time anymore, allowing Haswell's full computational power to show through. If you're interested in the other metrics PCM captures, the full data is available [here](https://docs.google.com/spreadsheets/d/1Stp8kEkmRlnzYo3UIawtSkqR8BxikpwOeyNwY4g9oJ0/edit?usp=sharing).
 
-More to come! I'm writing this in my free time.
+That's all I've got for now. If I can think of something I can investigate in the OpenCL code I will some other time.
 
 [^1]: Tests performed on an Intel Core i5-4460 with 8 GB DDR3-1866 and an EVGA GeForce GTX 970 with 347.52 drivers on Windows 8.1 Pro x64.
 [^2]: [Via SiSoftware](http://www.sisoftware.co.uk/?d=qa&f=mem_hsw)
