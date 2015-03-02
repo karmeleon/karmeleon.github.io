@@ -47,7 +47,20 @@
 				
  					<!-- Case for when no excerpt is defined -->
  					<!-- Inserts the entire post. Should only be done for short posts -->
- 					<p>While I was making this site, I discovered that Chrome has a bug with really tall gradients. To see what I mean, open up <a href="/2015/02/21/buddhabrot/">this long post</a> and look at the upper left-hand corner. The sidebar and the excerpt on the homepage work fine because they’re shorter. <a href="http://codepen.io/anon/pen/KwBwBp">This codepen</a> demonstrates the issue as well. IE11 has no problem with it and while Firefox blurs the sharp edge pretty badly, it does show up. The Chrome team has known about this for <a href="https://code.google.com/p/chromium/issues/detail?id=177293">about two years now</a>. I guess I’ll have to find a workaround until they get it fixed.</p>
+ 					<p>While I was making this site, I discovered that Chrome has a bug with really tall gradients. The beveled corner effect I have on here is done with a CSS gradient:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.blog-post-outline</span> <span class="p">{</span>
+	<span class="k">background</span><span class="o">:</span> <span class="n">linear</span><span class="o">-</span><span class="n">gradient</span><span class="p">(</span><span class="m">135</span><span class="n">deg</span><span class="o">,</span> <span class="k">transparent</span> <span class="m">15px</span><span class="o">,</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">.</span><span class="m">5</span><span class="p">)</span> <span class="m">0</span><span class="p">);</span>
+	<span class="k">padding</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.blog-post-content</span> <span class="p">{</span>
+	<span class="k">background</span><span class="o">:</span> <span class="n">linear</span><span class="o">-</span><span class="n">gradient</span><span class="p">(</span><span class="m">135</span><span class="n">deg</span><span class="o">,</span> <span class="k">transparent</span> <span class="m">15px</span><span class="o">,</span> <span class="nb">white</span> <span class="m">0</span><span class="p">);</span>
+	<span class="k">padding</span><span class="o">:</span> <span class="m">15px</span><span class="p">;</span>
+	<span class="c">/* ... */</span>
+<span class="p">}</span></code></pre></div>
+
+<p>To see what I mean, open up <a href="/2015/02/21/buddhabrot/">this long post</a> and look at the upper left-hand corner. The sidebar and the excerpt on the homepage work fine because they’re shorter. <a href="http://codepen.io/anon/pen/KwBwBp">This codepen</a> demonstrates the issue as well. IE11 has no problem with it and while Firefox blurs the sharp edge pretty badly, it does show up. The Chrome team has known about this for <a href="https://code.google.com/p/chromium/issues/detail?id=177293">about two years now</a>. I guess I’ll have to find a workaround until they get it fixed.</p>
 
 				
 				
