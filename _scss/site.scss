@@ -73,7 +73,7 @@ body {
 }
 
 .sidebar-outline {
-	background: -moz-linear-gradient(-135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+	//background: -moz-linear-gradient(-135deg, transparent 15px, rgba(0,0,0,0.5) 0);
 	background: linear-gradient(-135deg, transparent 15px, rgba(0,0,0,0.5) 0);
 	padding: 5px;
 }
@@ -115,8 +115,8 @@ $gutter-height: 50px;
 }
 
 .blog-post-outline {
-	background: -moz-linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
-	background: linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+	//background: -moz-linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+	background: linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0) top left;
 	padding: 5px;
 }
 
@@ -125,7 +125,7 @@ $gutter-height: 50px;
 }
 
 .blog-post-content {
-	background: linear-gradient(135deg, transparent 15px, white 0);
+	background: linear-gradient(135deg, transparent 15px, white 0) top left;
 	padding: 15px;
 	color: black;
 
