@@ -158,3 +158,71 @@ $gutter-height: 50px;
 .blog-full-post {
 	text-align: center;
 }
+
+// Resume stuff
+
+@media all {
+
+	.resume-section {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		padding-bottom: 30px;
+	}
+
+	$gutter-width: 250px;
+	$content-width: 600px;
+
+	.resume-section-title-outline {
+		width: $gutter-width + 10;
+		padding: 10px;
+		background: linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+	}
+
+	.resume-section-title {
+		height: 50px;
+		width: $gutter-width;
+		padding: 15px;
+		font-weight: bold;
+		font-size: x-large;
+		line-height: 20px;
+		text-align: center;
+		font-family: "Khand";
+		background: linear-gradient(135deg, transparent 15px, white 0);
+	}
+
+	.resume-section-content-outline {
+		background: rgba(0,0,0,0.5);
+		width: $content-width + 10;
+		padding: 10px 10px 10px 0;
+	}
+
+	.resume-section-content {
+		width: $content-width;
+		background: white;
+		padding: 15px;
+	}
+
+	.resume-section-item-container {
+		height: 30px;
+		font-size: large;
+		font-weight: bold;
+	}
+
+	.resume-section-item {
+		float: left;
+	}
+
+	.resume-section-date {
+		float: right;
+		width: 125px;
+	}
+
+	.resume-section-item-detail {
+		color: #808080;
+		font-size: medium;
+		padding-left: 25px;
+		padding-right: 125px;
+	}
+
+}
