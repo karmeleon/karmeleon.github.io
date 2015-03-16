@@ -5,6 +5,14 @@
 			margin-before: $in;
 }
 
+// variables
+$outline-color: rgba(128, 128, 128, 1);
+$title-font-stack: "Khand", sans-serif;
+$gutter-width: 250px;
+$gutter-height: 50px;
+$content-width: 600px;
+$title-font-size: x-large;
+
 // style
 
 h1 {
@@ -12,7 +20,7 @@ h1 {
 }
 
 h2 {
-	font-family: 'Khand', sans-serif;
+	font-family: $title-font-stack;
 	font-weight: lighter;
 }
 
@@ -41,7 +49,7 @@ body {
 }
 
 .header {
-	font-family: 'Khand', sans-serif;
+	font-family: $title-font-stack;
 	font-size: 1.5em;
 	text-align: center;
 	padding: 10px;
@@ -74,7 +82,7 @@ body {
 
 .sidebar-outline {
 	//background: -moz-linear-gradient(-135deg, transparent 15px, rgba(0,0,0,0.5) 0);
-	background: linear-gradient(-135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+	background: linear-gradient(-135deg, transparent 15px, $outline-color 0);
 	padding: 5px;
 }
 
@@ -99,8 +107,6 @@ article {
 	}
 }
 
-$gutter-height: 50px;
-
 .blog-post-gutter {
 	display: inline-block;
 	height: $gutter-height;
@@ -116,7 +122,7 @@ $gutter-height: 50px;
 
 .blog-post-outline {
 	//background: -moz-linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
-	background: linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+	background: linear-gradient(135deg, transparent 15px, $outline-color 0);
 	padding: 5px;
 }
 
@@ -163,6 +169,8 @@ $gutter-height: 50px;
 
 @media all {
 
+	$header-font-weight: lighter;
+
 	.resume-section {
 		display: flex;
 		flex-direction: row;
@@ -170,15 +178,11 @@ $gutter-height: 50px;
 		padding-bottom: 30px;
 	}
 
-	$gutter-width: 250px;
-	$gutter-height: 50px;
-	$content-width: 600px;
-
 	.resume-section-title-outline {
 		height: 70px;
 		width: $gutter-width + 10;
 		padding: 10px;
-		background: linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
+		background: linear-gradient(135deg, transparent 15px, $outline-color 0);
 	}
 
 	.resume-section-title {
@@ -186,17 +190,18 @@ $gutter-height: 50px;
 		width: $gutter-width;
 		padding: 15px;
 		font-weight: bold;
-		font-size: x-large;
+		font-size: $title-font-size;
 		line-height: 20px;
 		text-align: center;
-		font-family: "Khand";
+		font-family: $title-font-stack;
+		font-weight: $header-font-weight;
 		background: linear-gradient(135deg, transparent 15px, white 0);
 	}
 
 	.resume-section-content-outline {
 		position: relative;
 		left: -10px;
-		background: rgba(128, 128, 128, 1);
+		background: $outline-color;
 		width: $content-width + 20;
 		padding: 10px 10px 10px 10px;
 	}
@@ -205,6 +210,7 @@ $gutter-height: 50px;
 		width: $content-width;
 		background: white;
 		padding: 15px;
+		padding-top: 10px;
 
 		&::before {
 			content: '';
@@ -219,9 +225,10 @@ $gutter-height: 50px;
 	}
 
 	.resume-section-item-container {
-		height: 30px;
-		font-size: large;
-		font-weight: bold;
+		height: 34px;
+		font-size: $title-font-size;
+		font-weight: $header-font-weight;
+		font-family: $title-font-stack;
 	}
 
 	.resume-section-item {
