@@ -171,16 +171,18 @@ $gutter-height: 50px;
 	}
 
 	$gutter-width: 250px;
+	$gutter-height: 50px;
 	$content-width: 600px;
 
 	.resume-section-title-outline {
+		height: 70px;
 		width: $gutter-width + 10;
 		padding: 10px;
 		background: linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
 	}
 
 	.resume-section-title {
-		height: 50px;
+		height: $gutter-height;
 		width: $gutter-width;
 		padding: 15px;
 		font-weight: bold;
@@ -192,15 +194,28 @@ $gutter-height: 50px;
 	}
 
 	.resume-section-content-outline {
-		background: rgba(0,0,0,0.5);
-		width: $content-width + 10;
-		padding: 10px 10px 10px 0;
+		position: relative;
+		left: -10px;
+		background: rgba(128, 128, 128, 1);
+		width: $content-width + 20;
+		padding: 10px 10px 10px 10px;
 	}
 
 	.resume-section-content {
 		width: $content-width;
 		background: white;
 		padding: 15px;
+
+		&::before {
+			content: '';
+			width: 10px;
+			height: $gutter-height;
+			background-color: white;
+			position: absolute;
+			left: 0px;
+			top: 10px;
+			display: inline-block;
+		}
 	}
 
 	.resume-section-item-container {
