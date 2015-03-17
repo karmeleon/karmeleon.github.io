@@ -8,7 +8,7 @@
 // variables
 $outline-color: rgba(128, 128, 128, 1);
 $title-font-stack: "Khand", sans-serif;
-$gutter-width: 250px;
+$gutter-width: 200px;
 $gutter-height: 50px;
 $content-width: 600px;
 $title-font-size: x-large;
@@ -167,84 +167,92 @@ article {
 
 // Resume stuff
 
-@media all {
 
-	$header-font-weight: lighter;
 
+$header-font-weight: lighter;
+
+.resume-body {
+	-webkit-print-color-adjust: exact;
+}
+
+.resume-section {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding-bottom: 30px;
+}
+
+@media print {
 	.resume-section {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		padding-bottom: 30px;
+		padding-bottom: 10px;
 	}
+}
 
-	.resume-section-title-outline {
-		height: 70px;
-		width: $gutter-width + 10;
-		padding: 10px;
-		background: linear-gradient(135deg, transparent 15px, $outline-color 0);
-	}
+.resume-section-title-outline {
+	height: 70px;
+	width: $gutter-width + 10;
+	padding: 10px;
+	background: linear-gradient(135deg, transparent 15px, $outline-color 0);
+}
 
-	.resume-section-title {
+.resume-section-title {
+	height: $gutter-height;
+	width: $gutter-width;
+	padding: 15px;
+	font-weight: bold;
+	font-size: $title-font-size;
+	line-height: 20px;
+	text-align: center;
+	font-family: $title-font-stack;
+	font-weight: $header-font-weight;
+	background: linear-gradient(135deg, transparent 15px, white 0);
+}
+
+.resume-section-content-outline {
+	position: relative;
+	left: -10px;
+	background: $outline-color;
+	width: $content-width + 20;
+	padding: 10px 10px 10px 10px;
+}
+
+.resume-section-content {
+	width: $content-width;
+	background: white;
+	padding: 15px;
+	padding-top: 10px;
+
+	&::before {
+		content: '';
+		width: 10px;
 		height: $gutter-height;
-		width: $gutter-width;
-		padding: 15px;
-		font-weight: bold;
-		font-size: $title-font-size;
-		line-height: 20px;
-		text-align: center;
-		font-family: $title-font-stack;
-		font-weight: $header-font-weight;
-		background: linear-gradient(135deg, transparent 15px, white 0);
+		background-color: white;
+		position: absolute;
+		left: 0px;
+		top: 10px;
+		display: inline-block;
 	}
+}
 
-	.resume-section-content-outline {
-		position: relative;
-		left: -10px;
-		background: $outline-color;
-		width: $content-width + 20;
-		padding: 10px 10px 10px 10px;
-	}
+.resume-section-item-container {
+	height: 34px;
+	font-size: $title-font-size;
+	font-weight: $header-font-weight;
+	font-family: $title-font-stack;
+}
 
-	.resume-section-content {
-		width: $content-width;
-		background: white;
-		padding: 15px;
-		padding-top: 10px;
+.resume-section-item {
+	float: left;
+}
 
-		&::before {
-			content: '';
-			width: 10px;
-			height: $gutter-height;
-			background-color: white;
-			position: absolute;
-			left: 0px;
-			top: 10px;
-			display: inline-block;
-		}
-	}
+.resume-section-date {
+	float: right;
+	width: 125px;
+}
 
-	.resume-section-item-container {
-		height: 34px;
-		font-size: $title-font-size;
-		font-weight: $header-font-weight;
-		font-family: $title-font-stack;
-	}
-
-	.resume-section-item {
-		float: left;
-	}
-
-	.resume-section-date {
-		float: right;
-		width: 125px;
-	}
-
-	.resume-section-item-detail {
-		color: #808080;
-		font-size: medium;
-		padding-left: 25px;
-		padding-right: 125px;
-	}
-
+.resume-section-item-detail {
+	color: #808080;
+	font-size: medium;
+	padding-left: 25px;
+	padding-right: 125px;
 }
