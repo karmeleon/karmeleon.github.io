@@ -167,8 +167,6 @@ article {
 
 // Resume stuff
 
-
-
 $header-font-weight: lighter;
 
 .resume-body {
@@ -239,6 +237,7 @@ $header-font-weight: lighter;
 	font-size: $title-font-size;
 	font-weight: $header-font-weight;
 	font-family: $title-font-stack;
+	line-height: 30px;
 }
 
 .resume-section-item {
