@@ -41,8 +41,62 @@
 	<article class="blog-post">
 		<div class="blog-post-outline">
 			<div class="blog-post-content">
+				<h3><a href="/2015/05/18/klondike/">I take games way too seriously</a></h3>
+				<span class="blog-info-line">
+					<time datetime="2015-05-18">May 18, 2015</time>
+					<a href="/2015/05/18/klondike/#disqus_thread"></a>
+				</span>
+				<br/><br/>
+				<!-- <span class="blog-info-line">filed under </span><br/><br/> -->
+				
+ 					<!-- Case for when no excerpt is defined -->
+ 					<!-- Inserts the entire post. Should only be done for short posts -->
+ 					<p><img src="/assets/klondike.png" alt="Klondike is hard" /></p>
+
+<p>So, I’m bad at Solitaire. Like, <em>really bad</em>. However, I’m good at writing code and just took an algorithms course this semester, so one afternoon I decided to make up for my complete lack of card game strategy with brute force. About twelve hours later, I had a working Klondike generator and solver. Unfortunately, it doesn’t seem to solve many initial states, but I’m not sure if that’s because my code is bad or because the shuffling routine I use is just really good at making unsolveable decks.</p>
+
+<p>Whatever the reason is, it’s pretty fast at calculating moves due to a multithreaded architecture and a thread-safe priority queue that allows for a sort of hill-climbing algorithm. It often gets stuck in local maxima, though, but I think that’s just due to the nature of Klondike.</p>
+
+<p>On a related note, it’s almost the 25<sup>th</sup> birthday of Windows 3.0, the first version of Windows to include the familiar card game. Happy birthday, you dinosaur.</p>
+
+<p>The code is <a href="https://github.com/shawnwalton/SolitaireSolver">here</a>.</p>
+
+				
+				
+			</div>
+		</div>
+	</article>
+
+	<article class="blog-post">
+		<div class="blog-post-outline">
+			<div class="blog-post-content">
+				<h3><a href="/2015/05/12/fizzbuzz/">FizzBuzz in CSS</a></h3>
+				<span class="blog-info-line">
+					<time datetime="2015-05-12">May 12, 2015</time>
+					<a href="/2015/05/12/fizzbuzz/#disqus_thread"></a>
+				</span>
+				<br/><br/>
+				<!-- <span class="blog-info-line">filed under </span><br/><br/> -->
+				
+ 					<!-- Case for when no excerpt is defined -->
+ 					<!-- Inserts the entire post. Should only be done for short posts -->
+ 					<p>I saw <a href="https://www.reddit.com/r/web_design/comments/35prfv/designer_applies_for_js_job_fails_at_fizzbuzz/cr6u9kg?context=10000">this comment</a> on Reddit <a href="http://codepen.io/shawnwalton/pen/XbdXQV">and decided to make it</a>. Why? I dunno. Because I could, I guess.</p>
+
+				
+				
+			</div>
+		</div>
+	</article>
+
+	<article class="blog-post">
+		<div class="blog-post-outline">
+			<div class="blog-post-content">
 				<h3><a href="/2015/03/02/chrome-gradients/">Chrome and gradients are not friends.</a></h3>
-				<span class="blog-info-line"><time datetime="2015-03-02">Mar 02, 2015</time></span><br/><br/>
+				<span class="blog-info-line">
+					<time datetime="2015-03-02">Mar 02, 2015</time>
+					<a href="/2015/03/02/chrome-gradients/#disqus_thread"></a>
+				</span>
+				<br/><br/>
 				<!-- <span class="blog-info-line">filed under </span><br/><br/> -->
 				
  					<!-- Case for when no excerpt is defined -->
@@ -72,7 +126,11 @@
 		<div class="blog-post-outline">
 			<div class="blog-post-content">
 				<h3><a href="/2015/02/21/buddhabrot/">Buddhabrot?</a></h3>
-				<span class="blog-info-line"><time datetime="2015-02-21">Feb 21, 2015</time></span><br/><br/>
+				<span class="blog-info-line">
+					<time datetime="2015-02-21">Feb 21, 2015</time>
+					<a href="/2015/02/21/buddhabrot/#disqus_thread"></a>
+				</span>
+				<br/><br/>
 				<!-- <span class="blog-info-line">filed under </span><br/><br/> -->
 				
     				<p><img src="/assets/buddhabrot10.png" alt="Buddhabrot with a maximum of 10 iterations" /></p>
@@ -98,7 +156,11 @@
 		<div class="blog-post-outline">
 			<div class="blog-post-content">
 				<h3><a href="/jekyll/2015/02/20/jekyll-pls/">Jekyll is picky.</a></h3>
-				<span class="blog-info-line"><time datetime="2015-02-20">Feb 20, 2015</time></span><br/><br/>
+				<span class="blog-info-line">
+					<time datetime="2015-02-20">Feb 20, 2015</time>
+					<a href="/jekyll/2015/02/20/jekyll-pls/#disqus_thread"></a>
+				</span>
+				<br/><br/>
 				<!-- <span class="blog-info-line">filed under jekyll</span><br/><br/> -->
 				
  					<!-- Case for when no excerpt is defined -->
@@ -142,5 +204,17 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'shawnwalton';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 	</body>
 </html>
