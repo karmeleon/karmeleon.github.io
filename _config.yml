@@ -19,3 +19,6 @@ permalink: pretty
 # Tell Jekyll that I have scss
 sass:
     sass_dir: _scss
+
+# Finally get pagination to work
+paginate: 5
