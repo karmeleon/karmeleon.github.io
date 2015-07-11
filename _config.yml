@@ -11,7 +11,7 @@ author: Shawn Walton
 author_email: smwalto2@illinois.edu
 
 # The URL of your actual domain. This will be used to make absolute links in the RSS feed.
-url: https://shawnwalton.github.io
+url: https://karmeleon.github.io
 
 # Makes pretty (descriptive) permalinks. See Jekyll docs for alternatives.
 permalink: pretty

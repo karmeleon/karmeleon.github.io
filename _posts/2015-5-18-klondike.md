@@ -11,4 +11,4 @@ Whatever the reason is, it's pretty fast at calculating moves due to a multithre
 
 On a related note, it's almost the 25<sup>th</sup> birthday of Windows 3.0, the first version of Windows to include the familiar card game. Happy birthday, you dinosaur.
 
-The code is [here](https://github.com/shawnwalton/SolitaireSolver).
+The code is [here](https://github.com/karmeleon/SolitaireSolver).
