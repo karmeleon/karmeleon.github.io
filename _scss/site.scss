@@ -105,12 +105,6 @@ article {
 		height: 0; 
 		clear: both;
 	}
-
-	pre {
-		tab-size: 4;
-		-moz-tab-size: 4;
-		-o-tab-size: 4;
-	}
 }
 
 .blog-post-gutter {
@@ -164,6 +158,12 @@ article {
 
 	h2 {
 		font-size: 1.7em;
+	}
+
+	pre {
+		tab-size: 4;
+		-moz-tab-size: 4;
+		-o-tab-size: 4;
 	}
 }
 
