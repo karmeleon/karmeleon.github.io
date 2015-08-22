@@ -43,6 +43,53 @@
 	<article class="blog-post">
 		<div class="blog-post-outline">
 			<div class="blog-post-content">
+				<h3><a href="/knockout/2015/08/05/knockout-perf/">Squeezing Performance out of Knockout.js</a></h3>
+				<span class="blog-info-line">
+					<time datetime="2015-08-05">Aug 05, 2015</time>
+					<a href="/knockout/2015/08/05/knockout-perf/#disqus_thread"></a>
+				</span>
+				<br/><br/>
+				<!-- <span class="blog-info-line">filed under knockout</span><br/><br/> -->
+				
+    				<p><a href="http://knockoutjs.com">Knockout.js</a> is a fantastic MVVM framework that handles observables, templating, styling, and more. It’s easy to learn, but getting good performance out of it in larger apps can be difficult. Not to worry though, a few easy tweaks can make your app almost as responsive as a native app!</p>
+
+
+				
+				
+					<div class="blog-full-post">
+						<h3><a href="/knockout/2015/08/05/knockout-perf/">Full post</a></h3>
+					</div>
+				
+			</div>
+		</div>
+	</article>
+
+	<article class="blog-post">
+		<div class="blog-post-outline">
+			<div class="blog-post-content">
+				<h3><a href="/webdriverio/2015/07/24/webdriverio/">Quick note on Webdriverio</a></h3>
+				<span class="blog-info-line">
+					<time datetime="2015-07-24">Jul 24, 2015</time>
+					<a href="/webdriverio/2015/07/24/webdriverio/#disqus_thread"></a>
+				</span>
+				<br/><br/>
+				<!-- <span class="blog-info-line">filed under webdriverio</span><br/><br/> -->
+				
+ 					<!-- Case for when no excerpt is defined -->
+ 					<!-- Inserts the entire post. Should only be done for short posts -->
+ 					<p>The web team at TigerText uses CucumberJS, Selenium, and Webdriverio for its unit tests. However, I was unable to get it to run on my machine; Selenium would open a Chrome window to the url “data;,”, then do nothing. After hours of Googling and headaches, the problem ended up being that some of the files the tests use had syntax errors in them. Webdriverio didn’t spit out any error messages whatsoever, which made finding the problem difficult. I couldn’t find any mention of this on the internet, so I thought I’d post my findings for the good of everyone.</p>
+
+<p>Happy unit testing.</p>
+
+				
+				
+			</div>
+		</div>
+	</article>
+
+	<article class="blog-post">
+		<div class="blog-post-outline">
+			<div class="blog-post-content">
 				<h3><a href="/2015/05/20/site-upgrades/">Site upgrades!</a></h3>
 				<span class="blog-info-line">
 					<time datetime="2015-05-20">May 20, 2015</time>
@@ -82,7 +129,7 @@
 
 <p>On a related note, it’s almost the 25<sup>th</sup> birthday of Windows 3.0, the first version of Windows to include the familiar card game. Happy birthday, you dinosaur.</p>
 
-<p>The code is <a href="https://github.com/shawnwalton/SolitaireSolver">here</a>.</p>
+<p>The code is <a href="https://github.com/karmeleon/SolitaireSolver">here</a>.</p>
 
 				
 				
@@ -106,70 +153,6 @@
  					<p>I saw <a href="https://www.reddit.com/r/web_design/comments/35prfv/designer_applies_for_js_job_fails_at_fizzbuzz/cr6u9kg?context=10000">this comment</a> on Reddit <a href="http://codepen.io/shawnwalton/pen/XbdXQV">and decided to make it</a>. Why? I dunno. Because I could, I guess.</p>
 
 				
-				
-			</div>
-		</div>
-	</article>
-
-	<article class="blog-post">
-		<div class="blog-post-outline">
-			<div class="blog-post-content">
-				<h3><a href="/2015/03/02/chrome-gradients/">Chrome and gradients are not friends.</a></h3>
-				<span class="blog-info-line">
-					<time datetime="2015-03-02">Mar 02, 2015</time>
-					<a href="/2015/03/02/chrome-gradients/#disqus_thread"></a>
-				</span>
-				<br/><br/>
-				<!-- <span class="blog-info-line">filed under </span><br/><br/> -->
-				
- 					<!-- Case for when no excerpt is defined -->
- 					<!-- Inserts the entire post. Should only be done for short posts -->
- 					<p>While I was making this site, I discovered that Chrome has a bug with really tall gradients. The beveled corner effect I have on here is done like this:</p>
-
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.blog-post-outline</span> <span class="p">{</span>
-	<span class="k">background</span><span class="o">:</span> <span class="n">linear</span><span class="o">-</span><span class="n">gradient</span><span class="p">(</span><span class="m">135</span><span class="n">deg</span><span class="o">,</span> <span class="k">transparent</span> <span class="m">15px</span><span class="o">,</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">.</span><span class="m">5</span><span class="p">)</span> <span class="m">0</span><span class="p">);</span>
-	<span class="k">padding</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nc">.blog-post-content</span> <span class="p">{</span>
-	<span class="k">background</span><span class="o">:</span> <span class="n">linear</span><span class="o">-</span><span class="n">gradient</span><span class="p">(</span><span class="m">135</span><span class="n">deg</span><span class="o">,</span> <span class="k">transparent</span> <span class="m">15px</span><span class="o">,</span> <span class="nb">white</span> <span class="m">0</span><span class="p">);</span>
-	<span class="k">padding</span><span class="o">:</span> <span class="m">15px</span><span class="p">;</span>
-	<span class="c">/* ... */</span>
-<span class="p">}</span></code></pre></div>
-
-<p>Chrome fails to actually render it when the div it’s in is tall enough, instead just showing the standard 90 degree corner. To see what I mean, open up <a href="/2015/02/21/buddhabrot/">this long post</a> in Chrome and look at the upper left-hand corner of the post. The sidebar and the excerpt on the homepage work fine because they’re shorter. <a href="http://codepen.io/anon/pen/KwBwBp">This Codepen</a> demonstrates the issue as well. IE11 has no problem with it and while Firefox blurs the edge pretty badly, it does show up. The Chrome team has known about this for <a href="https://code.google.com/p/chromium/issues/detail?id=177293">about two years now</a>, but there’s been no real progress since. I hope they fix it soon, but until then I’ll have to find a workaround.</p>
-
-				
-				
-			</div>
-		</div>
-	</article>
-
-	<article class="blog-post">
-		<div class="blog-post-outline">
-			<div class="blog-post-content">
-				<h3><a href="/2015/02/21/buddhabrot/">Buddhabrot?</a></h3>
-				<span class="blog-info-line">
-					<time datetime="2015-02-21">Feb 21, 2015</time>
-					<a href="/2015/02/21/buddhabrot/#disqus_thread"></a>
-				</span>
-				<br/><br/>
-				<!-- <span class="blog-info-line">filed under </span><br/><br/> -->
-				
-    				<p><img src="/assets/buddhabrot10.png" alt="Buddhabrot with a maximum of 10 iterations" /></p>
-
-<p>So, if you haven’t been able to tell from the sidebar already, I do a lot of stuff with fractals, for two reasons: first, they present a fun challenge to parallelize and can be incredibly satisfying to get working, and second, they make pretty pictures!</p>
-
-<p>The second one was particularly important when I found <a href="https://en.wikipedia.org/wiki/Buddhabrot">the Wikipedia article on Buddhabrot</a> one night about four years ago. I decided it looked so cool that I was gonna code it the very next day! A week later, I had a somewhat-working implementation written in Java (since it was the only language I knew at the time) using <a href="http://www.jocl.org/">JOCL</a>. It was fast, but the images it produced were downright garbage since I had zero knowledge of parallel programming other than “it made things faster”.</p>
-
-<p>Over this past winter break, I had a ton of time and nothing to do, so I decided to revive the project in C. I had just aced a parallel programming class, so I had the knowledge I lacked when I tried so long ago. I ended up pulling it off, learning a ton in the process.</p>
-
-
-				
-				
-					<div class="blog-full-post">
-						<h3><a href="/2015/02/21/buddhabrot/">Full post</a></h3>
-					</div>
 				
 			</div>
 		</div>
@@ -201,14 +184,14 @@
 						
 							<h2 id="about">About</h2>
 
-<p>This is a blog I made to talk about programming type things that I find or write. If you find the stuff here interesting, feel free to  shoot me an email at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#115;&#109;&#119;&#097;&#108;&#116;&#111;&#050;&#064;&#105;&#108;&#108;&#105;&#110;&#111;&#105;&#115;&#046;&#101;&#100;&#117;">&#115;&#109;&#119;&#097;&#108;&#116;&#111;&#050;&#064;&#105;&#108;&#108;&#105;&#110;&#111;&#105;&#115;&#046;&#101;&#100;&#117;</a> or take a look at <a href="/assets/resume.html">my resumé</a> or <a href="https://www.linkedin.com/profile/view?id=317184116">LinkedIn</a>! There are a few older things on <a href="https://github.com/shawnwalton">my Github</a> that I haven’t written about, so you might as well go check that out too.</p>
+<p>This is a blog I made to talk about programming type things that I find or write. If you find the stuff here interesting, feel free to  shoot me an email at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#115;&#109;&#119;&#097;&#108;&#116;&#111;&#050;&#064;&#105;&#108;&#108;&#105;&#110;&#111;&#105;&#115;&#046;&#101;&#100;&#117;">&#115;&#109;&#119;&#097;&#108;&#116;&#111;&#050;&#064;&#105;&#108;&#108;&#105;&#110;&#111;&#105;&#115;&#046;&#101;&#100;&#117;</a> or take a look at <a href="/assets/resume.html">my resumé</a> or <a href="https://www.linkedin.com/profile/view?id=317184116">LinkedIn</a>! There are a few older things on <a href="https://github.com/karmeleon">my Github</a> that I haven’t written about, so you might as well go check that out too.</p>
 
 <hr />
 
 <h2 id="links">Links</h2>
 <ul>
-  <li><a href="https://shawnwalton.github.io/WGL-fractal/">WebGL Mandelbrot set viewer</a></li>
-  <li><a href="https://github.com/shawnwalton/Pbrot/">OpenMP/OpenCL Buddhabrot set generator</a></li>
+  <li><a href="https://karmeleon.github.io/WGL-fractal/">WebGL Mandelbrot set viewer</a></li>
+  <li><a href="https://github.com/karmeleon/Pbrot/">OpenMP/OpenCL Buddhabrot set generator</a></li>
 </ul>
 
 						</div>
