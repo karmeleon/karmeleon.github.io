@@ -3,6 +3,7 @@
 	<head>
 		<style type="text/css">
 			/* animations */
+			/* bar */
 			.loading-bar {
 				width: 500px;
 				height: 15px;
@@ -32,6 +33,8 @@
 				animation-name: indeterminate;
 				animation-iteration-count: infinite;
 			}
+			
+			/* spinner */
 			
 			.loading-icon {
 				width: 100px;
@@ -127,6 +130,73 @@
 				left: 15px;
 			}
 			
+			/* drop */
+			
+			.drop {
+				width: 100px;
+				height: 100px;
+				position: relative;
+				margin: 0 auto;
+			}
+			
+			.drop:before {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 0%;
+				left: 0%;
+				right: 0%;
+				bottom: 0%;
+				border-radius: 50%;
+				background-color: black;
+				
+				-webkit-animation-duration: 2s;
+				-webkit-animation-iteration-count: infinite;
+				-webkit-animation-name: drop;
+				-webkit-animation-timing-function: linear;
+				
+				animation-duration: 2s;
+				animation-iteration-count: infinite;
+				animation-name: drop;
+				animation-timing-function: linear;
+			}
+			
+			.drop:after {
+				content: '';
+				display: block;
+				position: absolute;
+				left: 10%;
+				right: 10%;
+				top: 10%;
+				bottom: 10%;
+				background-color: white;
+				border-radius: 50%;
+				
+				-webkit-animation-duration: 2s;
+				-webkit-animation-iteration-count: infinite;
+				-webkit-animation-name: drop-inner;
+				-webkit-animation-timing-function: linear;
+				
+				animation-duration: 2s;
+				animation-iteration-count: infinite;
+				animation-name: drop-inner;
+				animation-timing-function: linear;
+			}
+			
+			/* keyframes */
+			/* bar */
+			
+			@keyframes indeterminate {
+				from: {
+					margin-left: 0px;
+				}
+				to {
+					margin-left: 490px;
+				}
+			}
+			
+			/* spinner */
+			
 			@-webkit-keyframes spinner {
 				from {
 					-webkit-transform: rotate(0deg);
@@ -172,13 +242,90 @@
 				}
 			}
 			
-			@keyframes indeterminate {
-				from: {
-					margin-left: 0px;
+			/* drop */
+			
+			@-webkit-keyframes drop {
+				0% {
+					background-color: black;
+					left: 50%;
+					right: 50%;
+					top: 50%;
+					bottom: 50%;
 				}
-				to {
-					margin-left: 490px;
+				
+				75% {
+					background-color: transparent;
+					left: 0%;
+					right: 0%;
+					top: 0%;
+					bottom: 0%;
 				}
+				
+				100% {
+					background-color: transparent;
+				}	
+			}
+			
+			@-webkit-keyframes drop-inner {
+				0% {
+					left: 55%;
+					right: 55%;
+					top: 55%;
+					bottom: 55%;
+				}
+				
+				75% {
+					left: 5%;
+					right: 5%;
+					top: 5%;
+					bottom: 5%;
+				}
+				
+				100% {
+					
+				}	
+			}
+			
+			@keyframes drop {
+				0% {
+					background-color: black;
+					left: 50%;
+					right: 50%;
+					top: 50%;
+					bottom: 50%;
+				}
+				
+				75% {
+					background-color: transparent;
+					left: 0%;
+					right: 0%;
+					top: 0%;
+					bottom: 0%;
+				}
+				
+				100% {
+					background-color: transparent;
+				}	
+			}
+			
+			@keyframes drop-inner {
+				0% {
+					left: 55%;
+					right: 55%;
+					top: 55%;
+					bottom: 55%;
+				}
+				
+				75% {
+					left: 5%;
+					right: 5%;
+					top: 5%;
+					bottom: 5%;
+				}
+				
+				100% {
+					
+				}	
 			}
 			
 			/* other */
@@ -188,6 +335,7 @@
 		</style>
 	</head>
 	<body>
+		
 		<div class="loading-bar">
 			<div class="loading-bar-fill">
 				<div class="highlight">
@@ -199,6 +347,9 @@
 			<div class="loading-icon-inner">
 				<div class="inner-circle"></div>
 			</div>
+		</div>
+		
+		<div class="drop">
 		</div>
 	</body>
 </html>
