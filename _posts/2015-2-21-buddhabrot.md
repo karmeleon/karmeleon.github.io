@@ -55,7 +55,7 @@ And `critical`:
 }
 {% endhighlight %}
 
-The solution that I made up on my onw and eventually used was simply to give each thread its own copy of the output grid, then combine them together at the end. This avoids the overhead of OpenMP's synchronization implementations, but requires far more memory. Its code is also a little more complex, but still not hard:
+The solution that I made up on my own and eventually used was simply to give each thread its own copy of the output grid, then combine them together at the end. This avoids the overhead of OpenMP's synchronization implementations, but requires far more memory. Its code is also a little more complex, but still not hard:
 
 {% highlight c %}
 for (k = 0; k < numThreads; k++) {
@@ -141,7 +141,7 @@ I realized I never actually tested the performance of this change when I wrote i
 | Cached Small   | 57.243   | 2.245    | 0.257            | 0.642            |
 | Uncached Small | 71.422   | 1.485    | 0.242            | 0.624            |
 
-The z-cache increaded performance by 16% for the large runs and 25% for the small! These time improvements are reflected in the average IPC figures. The L2 and L3 cache hit rates remain mostly unchanged, but this makes sense; z-cache or not, the program still needs to hit the grid the same number of times. Unfortunately, PCM doesn't report memory bandwidth on non-Xeon processors and doesn't tell L1 hit rates at all. I'd be interested to see how much work the L1 caches did to increase the IPC so much.
+The z-cache increaced performance by 16% for the large runs and 25% for the small! These time improvements are reflected in the average IPC figures. The L2 and L3 cache hit rates remain mostly unchanged, but this makes sense; z-cache or not, the program still needs to hit the grid the same number of times. Unfortunately, PCM doesn't report memory bandwidth on non-Xeon processors and doesn't tell L1 hit rates at all. I'd be interested to see how much work the L1 caches did to increase the IPC so much.
 
 Just for fun, I graphed the IPC and hit rates over time, then overlaid it with the generated fractal and the results are beautiful:
 
