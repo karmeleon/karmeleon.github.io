@@ -22,3 +22,5 @@ sass:
 
 # Finally get pagination to work
 paginate: 5
+
+gems: [jekyll-paginate]

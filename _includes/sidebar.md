@@ -9,3 +9,4 @@ Links
 -----
 * [WebGL Mandelbrot set viewer](https://karmeleon.github.io/WGL-fractal/)
 * [OpenMP/OpenCL Buddhabrot set generator](https://github.com/karmeleon/Pbrot/)
+* [CUDA object recognition trainer](https://github.com/karmeleon/ImageRecognitionCUDA)
