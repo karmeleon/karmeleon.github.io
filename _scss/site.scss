@@ -8,9 +8,9 @@
 // variables
 $outline-color: rgba(128, 128, 128, 1);
 $title-font-stack: "Khand", sans-serif;
-$gutter-width: 200px;
+$gutter-width: 150px;
 $gutter-height: 50px;
-$content-width: 700px;
+$content-width: 750px;
 $title-font-size: x-large;
 
 // style
@@ -206,7 +206,7 @@ $header-font-weight: lighter;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 }
 
 @media print {
