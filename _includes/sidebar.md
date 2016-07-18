@@ -7,6 +7,7 @@ This is a blog I made to talk about programming type things that I find or write
 
 Links
 -----
+* [Android Wear battery monitor (Battmon)](https://play.google.com/store/apps/details?id=com.karmeleon.battmon)
 * [WebGL Mandelbrot set viewer](https://karmeleon.github.io/WGL-fractal/)
 * [OpenMP/OpenCL Buddhabrot set generator](https://github.com/karmeleon/Pbrot/)
 * [CUDA object recognition trainer](https://github.com/karmeleon/ImageRecognitionCUDA)
