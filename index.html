@@ -3,31 +3,34 @@ layout: default
 ---
 
 {% for post in paginator.posts %}
-	<article class="blog-post">
+	<section class="blog-post">
 		<div class="blog-post-outline">
-			<div class="blog-post-content">
-				<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-				<span class="blog-info-line">
-					<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time>
-					<a href="{{ post.url }}#disqus_thread"></a>
-				</span>
-				<br/><br/>
-				<!-- <span class="blog-info-line">filed under {{post.categories | category_links}}</span><br/><br/> -->
-				{% if post.content contains '<!--more-->' %}
-    				{{ post.content | split:'<!--more-->' | first }}
-				{% else %}
- 					<!-- Case for when no excerpt is defined -->
- 					<!-- Inserts the entire post. Should only be done for short posts -->
- 					{{ post.content }}
-				{% endif %}
-				{% if post.content contains '<!--more-->' %}
-					<div class="blog-full-post">
-						<h3><a href="{{ post.url }}">Full post</a></h3>
-					</div>
-				{% endif %}
+			<div class="blog-post-container">
+				<div class="blog-post-header">
+					<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+					<span class="blog-info-line">
+						<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time>
+						<a href="{{ post.url }}#disqus_thread"></a>
+					</span>
+				</div>
+				<article>
+					<!-- <span class="blog-info-line">filed under {{post.categories | category_links}}</span><br/><br/> -->
+					{% if post.content contains '<!--more-->' %}
+						{{ post.content | split:'<!--more-->' | first }}
+					{% else %}
+						<!-- Case for when no excerpt is defined -->
+						<!-- Inserts the entire post. Should only be done for short posts -->
+						{{ post.content }}
+					{% endif %}
+					{% if post.content contains '<!--more-->' %}
+						<div class="blog-full-post">
+							<h4><a href="{{ post.url }}">Full post &gt;</a></h4>
+						</div>
+					{% endif %}
+				</article>
 			</div>
 		</div>
-	</article>
+	</section>
 {% endfor %}
 
 

@@ -5,10 +5,10 @@ name: Blog.
 description: Shawn learns how to use Jekyll. It's surprisingly passable.
 
 # Your name, as you want it to appear underneath each post and in the footer
-author: Shawn Walton
+author: karmeleonnn
 
 # Your email if you want it to be linked on the contact page
-author_email: smwalto2@illinois.edu
+author_email: shawn@yelp.com
 
 # The URL of your actual domain. This will be used to make absolute links in the RSS feed.
 url: https://karmeleon.github.io
@@ -19,8 +19,26 @@ permalink: pretty
 # Tell Jekyll that I have scss
 sass:
     sass_dir: _scss
+    style: compressed
 
 # Finally get pagination to work
 paginate: 5
 
-gems: [jekyll-paginate]
+# SEO tag stuff
+twitter:
+  username: karmeleonnn
+
+logo: /assets/favicon.png
+
+social:
+  name: Shawn Walton
+  links:
+    - https://twitter.com/karmeleonnn
+    - https://www.facebook.com/karmeleonnn
+    - https://github.com/karmeleon
+    - https://www.linkedin.com/in/shawn-walton-7582838a/
+    - https://karmeleon.yelp.com
+
+google_site_verification: gtNWNpq10URnsd3lLUsbqcViEFe_r4lREE9UaULnBwk
+
+gems: [jekyll-paginate, jekyll-seo-tag]

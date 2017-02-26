@@ -1,10 +1,3 @@
-// functions
-
-@mixin margin-before($in) {
-	-webkit-margin-before: $in;
-			margin-before: $in;
-}
-
 // variables
 $outline-color: rgba(128, 128, 128, 1);
 $title-font-stack: "Khand", sans-serif;
@@ -13,19 +6,38 @@ $gutter-height: 50px;
 $content-width: 750px;
 $title-font-size: x-large;
 
+$mobile-break: 768px;
+$small-break: 992px;
+$large-break: 1200px;
+
 // style
+* {
+	box-sizing: border-box;
+}
 
 h1 {
-	
+	font-size: 36px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	font-weight: 500;
+	line-height: 1.1;
+	margin: .67em 0;
+
+	a:hover {
+		color: black;
+	}
 }
 
 h2 {
 	font-family: $title-font-stack;
 	font-weight: lighter;
+	font-size: 30px;
+	margin-top: 25px;
+	margin-bottom: 10px;
+	line-height: 1.1;
 }
 
 h3 {
-	@include margin-before(0);
 	font-family: $title-font-stack;
 	font-size: 2em !important;
 	font-weight: normal;
@@ -33,22 +45,39 @@ h3 {
 	padding-top: 3px;
 }
 
-html {
+h4 {
+	font-family: $title-font-stack;
+	font-size: 20px;
+	font-weight: normal;
+	margin: 0;
+	padding-top: 5px;
+}
 
+a {
+	color: #428bca;
+	text-decoration: none;
+
+	&:hover, &:focus {
+		color: #2a6496;
+		text-decoration: underline;
+	}
+}
+
+p {
+	margin: 0 0 10px;
 }
 
 body {
 	margin: 0;
 	font-family: 'Helvetica Neue', sans-serif;
-}
-
-.page {
 	display: flex;
 	flex-flow: column;
 	height: 100%;
+	font-size: 14px;
+	line-height: 1.42857143;
 }
 
-.header {
+header {
 	font-family: $title-font-stack;
 	font-size: 1.5em;
 	text-align: center;
@@ -60,23 +89,52 @@ body {
 	}
 }
 
-.content-bg {
-	padding: 50px 5px 10px;
-	flex: 1 1 auto;
-
-	// the magical clearfix
-	.about {
-		content: " ";
-		display: block; 
-		height: 0; 
-		clear: both;
-	}
+hr {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 0;
+	border-top: 1px solid #eee;
 }
 
-@media (max-width: 768px) {
-	.sidebar-outline {
-		margin-left: 15px;
-		margin-right: 15px;
+.main-container {
+	width: 100%;
+	flex-direction: column;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	.content-col {
+		width: 95%;
+		margin: 0 auto;
+
+		@media (min-width: $mobile-break) {
+			width: calc(66% - 4px);
+		}
+	}
+
+	.sidebar-col {
+		width: 95%;
+		margin: 0 auto;
+
+		@media (min-width: $mobile-break) {
+			width: calc(33% - 4px);
+		}
+	}
+
+	@media (min-width: $mobile-break) {
+		width: 750px;
+		flex-direction: row;
+	}
+
+	@media (min-width: $small-break) {
+		width: 970px;
+		flex-direction: row;
+	}
+
+	@media (min-width: $large-break) {
+		width: 1170px;
+		flex-direction: row;
 	}
 }
 
@@ -86,7 +144,7 @@ body {
 	padding: 5px;
 }
 
-.sidebar-col {
+.sidebar-content {
 	background: linear-gradient(-135deg, transparent 15px, white 0);
 	padding: 15px;
 
@@ -95,7 +153,7 @@ body {
 	}
 }
 
-article {
+section {
 	margin-bottom: 30px;
 
 	// the magical clearfix
@@ -107,19 +165,6 @@ article {
 	}
 }
 
-.blog-post-gutter {
-	display: inline-block;
-	height: $gutter-height;
-	width: 150px;
-	padding: 5px 5px 5px 15px;
-	background-color: white;
-	color: black;
-
-	float: left;
-	
-	background: linear-gradient(135deg, transparent 10px, white 0);
-}
-
 .blog-post-outline {
 	//background: -moz-linear-gradient(135deg, transparent 15px, rgba(0,0,0,0.5) 0);
 	background: linear-gradient(135deg, transparent 15px, $outline-color 0);
@@ -128,9 +173,10 @@ article {
 
 .blog-info-line {
 	color: grey;
+	margin-bottom: 10px;
 }
 
-.blog-post-content {
+.blog-post-container {
 	background: linear-gradient(135deg, transparent 15px, white 0);
 	padding: 15px;
 	color: black;
@@ -140,11 +186,6 @@ article {
 		max-width: 100%;
 		max-height: 100%;
 		margin: 0 auto;
-
-		// image captions
-		& + em {
-			
-		}
 	}
 
 	blockquote {
@@ -152,11 +193,30 @@ article {
 	}
 
 	table {
-		width: 100%;
+		width: 60%;
+		margin: 5px auto;
+		border-collapse: collapse;
+		border-spacing: 0px;
+
+		thead > tr {
+			background-color: $outline-color;
+			color: white;
+
+			th:not(:first-child) {
+				border-left: 1px solid white;
+			}
+		}
 
 		td {
-			border: 1px solid lightgrey;
-			padding: 2px;
+			background-color: whitesmoke;
+			border-bottom: 1px solid white;
+			border-right: 1px solid white;
+			padding: 4px;
+
+			&:first-child {
+				font-weight: bold;
+				background-color: lightgrey;
+			}
 		}
 	}
 
@@ -169,6 +229,10 @@ article {
 		-moz-tab-size: 4;
 		-o-tab-size: 4;
 	}
+}
+
+.blog-post-header {
+	margin-bottom: 12px;
 }
 
 .blog-full-post {
@@ -192,103 +256,4 @@ article {
 	a + em {
 		margin-left: 5px;
 	}
-}
-
-// Resume stuff
-
-$header-font-weight: lighter;
-
-.resume-body {
-	-webkit-print-color-adjust: exact;
-}
-
-.resume-section {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	padding-bottom: 10px;
-}
-
-@media print {
-	.resume-section {
-		padding-bottom: 10px;
-	}
-}
-
-.resume-section-title-outline {
-	height: 70px;
-	width: $gutter-width + 10;
-	padding: 10px;
-	background: linear-gradient(135deg, transparent 15px, $outline-color 0);
-}
-
-.resume-section-title {
-	height: $gutter-height;
-	width: $gutter-width;
-	padding: 15px;
-	font-weight: bold;
-	font-size: $title-font-size;
-	line-height: 20px;
-	text-align: center;
-	font-family: $title-font-stack;
-	font-weight: $header-font-weight;
-	background: linear-gradient(135deg, transparent 15px, white 0);
-}
-
-.resume-section-content-outline {
-	position: relative;
-	left: -10px;
-	background: $outline-color;
-	width: $content-width + 20;
-	padding: 10px 10px 10px 10px;
-}
-
-.resume-section-content {
-	width: $content-width;
-	background: white;
-	padding: 15px;
-	padding-top: 10px;
-
-	&::before {
-		content: '';
-		width: 10px;
-		height: $gutter-height;
-		background-color: white;
-		position: absolute;
-		left: 0px;
-		top: 10px;
-		display: inline-block;
-	}
-}
-
-.resume-section-item-container {
-	height: 34px;
-	font-size: $title-font-size;
-	font-weight: $header-font-weight;
-	font-family: $title-font-stack;
-	line-height: 30px;
-}
-
-.resume-section-item {
-	float: left;
-}
-
-.resume-section-date {
-	float: right;
-	width: 125px;
-}
-
-.resume-section-item-detail {
-	color: #808080;
-	font-size: medium;
-	padding-left: 25px;
-	padding-right: 75px;
-}
-
-.wide {
-	padding-right: 25px;
-}
-
-.wide-detail {
-	padding-right: 25px;
 }

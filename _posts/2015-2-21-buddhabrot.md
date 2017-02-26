@@ -3,7 +3,7 @@ layout: post
 title: Buddhabrot?
 ---
 
-![Buddhabrot with a maximum of 10 iterations](/assets/buddhabrot10.png)
+![Buddhabrot with a maximum of 10 iterations](/assets/Buddhabrot/buddhabrot10.png)
 
 So, if you haven't been able to tell from the sidebar already, I do a lot of stuff with fractals, for two reasons: first, they present a fun challenge to parallelize and can be incredibly satisfying to get working, and second, they make pretty pictures!
 
@@ -69,7 +69,7 @@ grid[threadNum][coord]++;
 
 Now that we have our code, let's take a look at the results! [^1]
 
-![Results of race condition avoidance methods](/assets/raceresults.png)
+![Results of race condition avoidance methods](/assets/Buddhabrot/raceresults.png)
 
 | Method                  | Time (s) | Time (relative) |
 |-------------------------|----------|-----------------|
@@ -132,7 +132,7 @@ for(i = 0; i < maxIterations; i++) {
 
 I realized I never actually tested the performance of this change when I wrote it, so why not do it now? The first run with each approach will be with a grid size of 10000 x 10000 at 7x supersampling, while the second will be 700 x 700 at 100x supersampling. This keeps the total number of calculations the same, but with working sets of 800 MB and 3.92 MB spread across four threads, they'll show the advantages of having a cache-sized data set. I'll be using [Intel PCM](https://software.intel.com/en-us/articles/intel-performance-counter-monitor) to gather statistics on L2 and L3 cache hit rate as well as instructions per clock. Without further ado:
 
-![Results of Caching Test](/assets/BuddhabrotCaching.png)
+![Results of Caching Test](/assets/Buddhabrot/BuddhabrotCaching.png)
 
 | Run            | Time (s) | Avg. IPC | Avg. L2 Hit Rate | Avg. L3 Hit Rate |
 |----------------|----------|----------|------------------|------------------|
@@ -145,13 +145,13 @@ The z-cache increaced performance by 16% for the large runs and 25% for the smal
 
 Just for fun, I graphed the IPC and hit rates over time, then overlaid it with the generated fractal and the results are beautiful:
 
-![Performances metrics vs. Time at 10k](/assets/BuddhabrotCached10kOverlay.png)
+![Performances metrics vs. Time at 10k](/assets/Buddhabrot/BuddhabrotCached10kOverlay.png)
 
 You can see that IPC and L3 hit rates are high where the program processed points that left the Mandelbrot set immediately, while points that stayed in the set longer and caused more grid accesses were correlated with lower IPC and cache rates as the main memory had to be accessed more often. Note that the columns near the left and right sides are processed much more quickly than the ones in the middle, so the graph isn't even overlaid perfectly.
 
 I did the same with the 700 x 700 run, but those results weren't as pretty:
 
-![Performances metrics vs. Time at 700](/assets/BuddhabrotCached700Overlay.png)
+![Performances metrics vs. Time at 700](/assets/Buddhabrot/BuddhabrotCached700Overlay.png)
 
 Since the entire working set more or less fits in cache, metrics stayed relatively high throughout the run. IPC seems to follow a bell curve of sorts, mostly immune to the fluctuations seen in the 10k run. I think this is because the more computationally demanding points require more floating point performance and aren't slowed down by system RAM access time anymore, allowing Haswell's full computational power to show through. If you're interested in the other metrics PCM captures, the full data is available [here](https://docs.google.com/spreadsheets/d/1Stp8kEkmRlnzYo3UIawtSkqR8BxikpwOeyNwY4g9oJ0/edit?usp=sharing).
 
