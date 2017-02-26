@@ -193,7 +193,10 @@ section {
 	}
 
 	table {
-		width: 60%;
+		width: 100%;
+		@media (min-width: $mobile-break) {
+			width: 60%;
+		}
 		margin: 5px auto;
 		border-collapse: collapse;
 		border-spacing: 0px;
