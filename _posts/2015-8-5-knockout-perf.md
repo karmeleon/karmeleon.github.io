@@ -49,11 +49,11 @@ We're Not Cavemen, We Have Technology
 
 You can stare at your code all day, diagramming out every last dependency and converting everything you can to pure computed observables, but at the end of the day application response time is what you really care about. Happily, Chrome's developer tools are extremely powerful and can help you figure out why that simple button press is taking ten seconds to update a simple block of text!
 
-![Behold, the profiler view!](/assets/devtools.png)
+![Behold, the profiler view!](/assets/KnockoutPerf/devtools.png)
 
 Behold, the profiler view! This unassuming screen allows you to see exactly what your app's call stack looks like, millisecond by millisecond!
 
-![Behold, the chart view!](/assets/timeline.png)
+![Behold, the chart view!](/assets/KnockoutPerf/timeline.png)
 
 Start the profiler, do whatever you want, then stop it and change the view to the chart view with the dropdown at the top of the window. You can see exactly what functions are running, when, and how long they took. You can also click on each of those colorful little boxes to see where in the code that function is. The bottom-up view shows you which functions ran for the most time total, useful for deciding which functions to optimize first. You should be able to get a good idea of what Knockout's doing by looking at the function names on the chart, but sometimes you want to see exactly when something of interest is being executed. Unfortunately, [`console.timeStamp()`](https://developer.chrome.com/devtools/docs/console-api#consoletimestamplabel) only works in the Timeline view, so we'll have to be a little more clever to mark up the profiler chart. Instead, we need deep recursion (to make a big spike) and it has to take long enough for Chrome to realize it's happening. Copy/pasting something like this before and after a line of interest should generate an obvious shape in the resulting chart:
 
