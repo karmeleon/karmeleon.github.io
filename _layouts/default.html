@@ -1,7 +1,5 @@
 ---
 layout: compress
-redirect_to:
-  - https://sha.wn.zone/
 ---
 
 <!DOCTYPE html>
@@ -9,45 +7,11 @@ redirect_to:
 <html lang="en-US">
 	<head>
 		<meta charset="utf-8"/>
+		<meta http-equiv="refresh" content="0;url=https://sha.wn.zone/" />
 		<link rel="shortcut icon" type="image/png" href="/assets/favicon.png"/>
-		<!-- for the three people on Earth who use RSS -->
-		<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml"/>
-		<title>{% if page.title %} {{ page.title }} | {% endif %} {{ site.name }}</title>
-		<!-- Color used in Chrome for Android -->
-		<meta name="theme-color" content="#808080">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- stylesheets -->
-		<link href='https://fonts.googleapis.com/css?family=Khand:400,600' rel='stylesheet' type='text/css'>
-		<link href="/css/main.css" type="text/css" rel="stylesheet">
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-			ga('create', 'UA-60113999-1', 'auto');
-			ga('send', 'pageview');
-		</script>
-		{% seo title=false %}
 	</head>
 	<body>
-		<header>
-			<h1><a href="/">{{ site.name }}</a></h1>
-			<h2>A blog where I talk about code things.</h2>
-		</header>
-		<div class="main-container">
-			<div class="content-col">
-				{{ content }}
-			</div>
-			<aside class="sidebar-col">
-				<div class="sidebar-outline">
-					<div class="sidebar-content">
-					{% capture fileContent %}{% include sidebar.md %}{% endcapture %}
-						{{ fileContent | markdownify }}
-					</div>
-				</div>
-			</aside>
-		</div>
-		{% include comment_count.html %}
+		<h1>Redirecting...</h1>
+		<span>Click <a href="https://sha.wn.zone/">here</a> if you aren't redirected shortly</span>
 	</body>
 </html>
